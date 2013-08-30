@@ -1,13 +1,20 @@
 {
   "name": "bubblechartjs",
-  "version": "0.1.0",
+  "description": "BubblechartJS is a JavaScript module for the comparative visualization of two dimensional data in a Bubble Chart."
+  "version": "0.0.0-dev",
+  "license": "Apache 2.0",
+  "homepage": "http://https://github.com/jondavidjohn/bubblechartjs",
+  "bugs": "http://https://github.com/jondavidjohn/bubblechartjs/issues",
+  "author": "Jonathan D. Johnson (http://jondavidjohn.com)",
   "dependencies": {
     "grunt": "latest",
     "grunt-contrib-coffee": "latest",
     "grunt-contrib-uglify": "latest",
-    "grunt-contrib-jshint": "latest",
     "grunt-contrib-qunit": "latest",
     "grunt-contrib-watch": "latest",
     "grunt-contrib-concat": "latest"
+  },
+  "scripts": {
+    "test": "grunt test"
   }
 }

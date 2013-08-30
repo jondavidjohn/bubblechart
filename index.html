@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>BubbleChart</title>
+</head>
+<body>
+	<canvas id="bubblechart" height="500" width="600"></canvas>
+	<script src="dist/bubblechart.js"></script>
+	<script>
+		(function() {
+			var chart;
+
+			chart = new BubbleChart({
+				canvasId: "bubblechart",
+				data: getData(),
+				metric: "watchers",
+				colors: ['#FF0000', '#00FF00', '#0000FF']
+			});
+
+			function getData() {
+				return [{
+					label: "thing10",
+					amount: 10
+				},{
+					label: "thing5",
+					amount: 5
+				},{
+					label: "thing35",
+					amount:35
+				},{
+					label: "thing",
+					amount: 10
+				}];
+			}
+		})();
+	</script>
+</body>
+</html>

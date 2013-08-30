@@ -1,20 +1,23 @@
-# bubblechartjs
+# BubblechartJS
 
-```html
-  <canvas id="my-bubblechart" height="500" width="600"></canvas>
-```
+BubblechartJS is a JavaScript module for the comparative visualization of two dimensional data in Bubble Chart.
 
-```js
+**Why write it in Coffeescript?**
 
-(function() {
-  var chart = new BubbleChart({
-    canvasId: "my-bubblechart",
-    dataInterface: new BCI_Github()
-    colorPalette: ...
-  });
+I've never spent significant time with it, figured I'd give it a spin.
 
-  chart.reload();
-  chart.refresh();
-})();
+## Usage
 
-```
+## Process your own data
+
+## Browser Support
+
+This module relies heavily on the canvas support which is not support
+in IE8 and older.
+
+Most all other major browsers have support for `<canvas>`.
+
+## Development
+
+see [CONTRIBUTING.md]()
+
