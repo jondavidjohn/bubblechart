@@ -9,8 +9,10 @@ module('BubbleChart.Bubble Tests');
 				color: 'red',
 				borderColor: 'white',
 				radius: 3,
-				x: 3,
-				y: 6
+				position: {
+					x: 3,
+					y: 6
+				}
 			};
 
 		for (opt in override_opts) { opts[opt] = override_opts[opt]; }
@@ -31,12 +33,4 @@ module('BubbleChart.Bubble Tests');
 		equal(bubble.velocity.y, 0);
 	});
 
-	test('updateVelocity', function() {
-		var bubble = generate();
-
-		bubble.updateVelocity(2, 5);
-
-		equal(bubble.velocity.x, 2);
-		equal(bubble.velocity.y, 5);
-	});
 })(BubbleChart.Bubble);

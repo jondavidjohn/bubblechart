@@ -3,6 +3,11 @@
 <head>
 	<meta charset="utf-8">
 	<title>BubbleChart</title>
+	<style>
+		#bubblechart {
+			background-color: whiteSmoke;
+		}
+	</style>
 </head>
 <body>
 	<canvas id="bubblechart" height="500" width="600"></canvas>
@@ -21,16 +26,16 @@
 			function getData() {
 				return [{
 					label: "thing10",
-					amount: 10
+					data: 10
 				},{
 					label: "thing5",
-					amount: 5
+					data: 5
 				},{
 					label: "thing35",
-					amount:35
+					data:35
 				},{
 					label: "thing",
-					amount: 10
+					data: 10
 				}];
 			}
 		})();

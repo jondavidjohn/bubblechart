@@ -1,15 +1,12 @@
 class BubbleChart.Bubble
-  constructor: (options) ->
+  constructor: (o) ->
     @grabbed = false
-    @href = options.href
-    @color = options.color
-    @borderColor = options.borderColor
-    @radius = options.radius
-    @position = new BubbleChart.Point(options.x, options.y)
+    @href = o.href
+    @color = o.color
+    @borderColor = o.borderColor
+    @radius = o.radius
+    @position = o.position
     @velocity =
-      x: 0
-      y: 0
+      x: o.vX || 0
+      y: o.vY || 0
 
-  updateVelocity: (x, y) ->
-    @velocity.x = x
-    @velocity.y = y
