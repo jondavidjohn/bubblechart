@@ -1,6 +1,6 @@
 # BubblechartJS
 
-[![Build Status](https://travis-ci.org/jondavidjohn/bubblechartjs.png)](https://travis-ci.org/jondavidjohn/bubblechartjs)
+[![Build Status](https://travis-ci.org/jondavidjohn/bubblechartjs.png?branch=master,develop)](https://travis-ci.org/jondavidjohn/bubblechartjs)
 
 BubblechartJS is a JavaScript module for the comparative visualization of two dimensional data in Bubble Chart.
 
