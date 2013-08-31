@@ -2,7 +2,12 @@ module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON('package.json')
 
-    clean: ['lib/', 'dist/', '!**/.gitignore']
+    clean: [
+      'lib/**/*',
+      'dist/**/*',
+      '!lib/.gitignore'
+      '!dist/.gitignore'
+    ]
 
     coffee:
       compile:
