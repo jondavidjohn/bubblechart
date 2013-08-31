@@ -6,8 +6,8 @@ Some things you should be familiar with before getting started
 
   - [Coffeescript](http://coffeescript.org/)
   - Unit testing (with [QUnit](http://qunitjs.com))
-  - [Grunt](http://gruntjs.org) (**install this**)
-  - [NPM](https://npmjs.org/) (**install this**)
+  - [Grunt](http://gruntjs.org) ( **install this** )
+  - [NPM](https://npmjs.org/) ( **install this** )
 
 ## Project Layout
 
