@@ -20,6 +20,6 @@
     "grunt-contrib-concat": "latest"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt dist"
   }
 }
