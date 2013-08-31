@@ -13,6 +13,7 @@
   "dependencies": {
     "grunt": "latest",
     "grunt-cli": "latest",
+    "grunt-contrib-clean": "latest",
     "grunt-contrib-coffee": "latest",
     "grunt-contrib-uglify": "latest",
     "grunt-contrib-qunit": "latest",

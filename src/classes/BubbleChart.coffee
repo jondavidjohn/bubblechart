@@ -1,4 +1,4 @@
-class window.BubbleChart
+class @BubbleChart
   constructor: (options) ->
     @canvas = document.getElementById options.canvasId
     @data = options.data

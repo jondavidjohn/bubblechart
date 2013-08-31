@@ -2,6 +2,8 @@ module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON('package.json')
 
+    clean: ['lib/', 'dist/']
+
     coffee:
       compile:
         expand: true
@@ -25,14 +27,14 @@ module.exports = (grunt) ->
         separator: ';'
       dist:
         src: ['lib/**/*.js']
-        dest: 'dist/<%= pkg.name %>.js'
+        dest: 'dist/bubblechart.js'
 
     uglify:
       options:
         banner: '<%= concat.options.banner %>'
       dist:
         files:
-          'dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+          'dist/bubblechart.min.js': ['<%= concat.dist.dest %>']
 
     qunit:
       files: ['test/index.html']
@@ -42,6 +44,7 @@ module.exports = (grunt) ->
       tasks: ['coffee:compile', 'concat', 'test']
 
   # Load Package Tasks
+  grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-concat'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
@@ -50,5 +53,5 @@ module.exports = (grunt) ->
 
   # Define Custom Tasks
   grunt.registerTask 'test', ['qunit']
-  grunt.registerTask 'dist', ['coffee:compile', 'concat:dist', 'test', 'uglify:dist']
-  grunt.registerTask 'travis', ['coffee:compile', 'concat:dist', 'test']
+  grunt.registerTask 'dist', ['clean', 'coffee:compile', 'concat:dist', 'test', 'uglify:dist']
+  grunt.registerTask 'travis', ['clean', 'coffee:compile', 'concat:dist', 'test']
