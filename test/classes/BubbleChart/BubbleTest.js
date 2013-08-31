@@ -1,5 +1,6 @@
-(function() {
-	module('BubbleChart.Bubble Tests');
+module('BubbleChart.Bubble Tests');
+
+(function(Bubble) {
 
 	function generate(override_opts) {
 		var opt,
@@ -13,7 +14,7 @@
 			};
 
 		for (opt in override_opts) { opts[opt] = override_opts[opt]; }
-		return new BubbleChart.Bubble(opts);
+		return new Bubble(opts);
 	}
 
 	test('constructor', function() {
@@ -38,4 +39,4 @@
 		equal(bubble.velocity.x, 2);
 		equal(bubble.velocity.y, 5);
 	});
-})();
+})(BubbleChart.Bubble);

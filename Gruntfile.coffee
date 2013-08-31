@@ -42,7 +42,7 @@ module.exports = (grunt) ->
           'dist/bubblechart.min.js': ['<%= concat.dist.dest %>']
 
     qunit:
-      files: ['test/index.html']
+      files: ['test/classes/**/*.html']
 
     watch:
       files: ['<%= coffee.compile.src %>'],
