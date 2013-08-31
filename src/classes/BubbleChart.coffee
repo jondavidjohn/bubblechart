@@ -4,12 +4,13 @@ class @BubbleChart
     @metric = o.metric
     @colors = o.colors
     @speed = o.speed || 5
-    @drawInterval = o.drawInterval || 1000
+    @fps = o.fps || 30
 
     # Calc Canvas metrics
     @canvas = document.getElementById o.canvasId
     @canvas.usableArea = (@canvas.height * @canvas.width) * (o.usedArea || 0.5)
     @canvas.midpoint = new BubbleChart.Point(@canvas.width / 2, @canvas.height / 2)
+    @canvas.context = @canvas.getContext('2d')
 
     @metricTotal = (d.data for d in @data).reduce (a, b) -> a + b
 
@@ -21,8 +22,9 @@ class @BubbleChart
 
       opts =
         href: d.href
-        color: ''
-        borderColor: ''
+        label: d.label
+        color: @colors[0]
+        borderColor: @colors[0]
         radius: Math.sqrt((@canvas.usableArea * (d.data / @metricTotal))) / 2
         position: new BubbleChart.Point(x, y)
         vX: 0.05 * @randMax(@speed + 1)
@@ -33,7 +35,10 @@ class @BubbleChart
     @draw()
 
   draw: ->
-    setTimeout (=> @draw()), @drawInterval
+    @canvas.context.clearRect(0,0, @canvas.width, @canvas.height);
+    for b in @bubbles
+      b.draw(@canvas.context)
+    setTimeout (=> @draw()), 1000 / @fps
 
   randMax: (max) ->
     Math.floor(Math.random() * max)
