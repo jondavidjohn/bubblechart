@@ -5,9 +5,14 @@
   "license": "Apache 2.0",
   "homepage": "http://https://github.com/jondavidjohn/bubblechartjs",
   "bugs": "http://https://github.com/jondavidjohn/bubblechartjs/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jondavidjohn/bubblechartjs.git"
+  },
   "author": "Jonathan D. Johnson (http://jondavidjohn.com)",
   "dependencies": {
     "grunt": "latest",
+    "grunt-cli": "latest",
     "grunt-contrib-coffee": "latest",
     "grunt-contrib-uglify": "latest",
     "grunt-contrib-qunit": "latest",
