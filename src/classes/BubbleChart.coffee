@@ -3,44 +3,89 @@ class @BubbleChart
     @data = o.data
     @metric = o.metric
     @colors = o.colors
-    @speed = o.speed || 5
-    @fps = o.fps || 30
+    @speed = o.speed || 20
+    @fps = o.fps || 60
+    @dragging = false
 
     # Calc Canvas metrics
     @canvas = document.getElementById o.canvasId
-    @canvas.usableArea = (@canvas.height * @canvas.width) * (o.usedArea || 0.5)
+    @canvas.area = @canvas.height * @canvas.width
+    @canvas.usableArea = @canvas.area * (o.usedArea || 0.5)
     @canvas.midpoint = new BubbleChart.Point(@canvas.width / 2, @canvas.height / 2)
     @canvas.context = @canvas.getContext('2d')
+
+    # Mouse
+    @mouse =
+      last: null
+      current: null
+      bubble: null
+      moving: false
+
+    @canvas.onmousemove = do =>
+      stop
+      (e) =>
+        clearTimeout stop
+        e.offsetX ?= e.layerX
+        e.offsetY ?= e.layerY
+        if @mouse.current?
+          @mouse.last = new BubbleChart.Point(@mouse.current.x, @mouse.current.y)
+        @mouse.current = new BubbleChart.Point(e.offsetX, e.offsetY)
+        @mouse.moving = true
+        stop = setTimeout (=> @mouse.moving = false), 50
+
+    @canvas.onmousedown  = (e) =>
+      if @mouse.bubble?
+        @mouse.bubble.grabbed = @dragging = true
+
+    @canvas.onmouseup  = (e) =>
+      if @mouse.bubble?
+        @mouse.bubble.grabbed = @dragging = false
 
     @metricTotal = (d.data for d in @data).reduce (a, b) -> a + b
 
     @bubbles = []
 
     for d in @data
-      x = @randMax(Math.sqrt(@canvas.usableArea))
-      y = @randMax(Math.sqrt(@canvas.usableArea))
-
       opts =
         href: d.href
         label: d.label
-        color: @colors[0]
-        borderColor: @colors[0]
+        color: d.fillColor
+        borderColor: d.borderColor || o.borderColor
+        borderSize: d.borderSize || o.borderSize
         radius: Math.sqrt((@canvas.usableArea * (d.data / @metricTotal))) / 2
-        position: new BubbleChart.Point(x, y)
-        vX: 0.05 * @randMax(@speed + 1)
-        vY: 0.05 * @randMax(@speed + 1)
+        position: new BubbleChart.Point(
+          BubbleChart.randMax(Math.sqrt(@canvas.area)),
+          BubbleChart.randMax(Math.sqrt(@canvas.area))
+        )
+        speed: @speed
+        pointOfGravity: @canvas.midpoint
 
       @bubbles.push new BubbleChart.Bubble(opts)
 
-    @draw()
 
-  draw: ->
-    @canvas.context.clearRect(0,0, @canvas.width, @canvas.height);
+  paint: ->
     for b in @bubbles
-      b.draw(@canvas.context)
-    setTimeout (=> @draw()), 1000 / @fps
+      b.advance(@)
+      for bubble in @bubbles
+        if b.label isnt bubble.label and b.distanceFrom(bubble) < 0
+          b.resolveCollisionWith(bubble)
 
-  randMax: (max) ->
+    @canvas.context.clearRect(0,0, @canvas.width, @canvas.height)
+
+    document.body.style.cursor = "default" if not @dragging
+    @mouse.bubble = null if not @dragging
+    for b in @bubbles
+      b.paint(@canvas.context)
+      if @mouse.current? and not @dragging
+        if @canvas.context.isPointInPath(@mouse.current.x, @mouse.current.y)
+          @mouse.bubble = b
+
+    if @mouse.bubble?
+      document.body.style.cursor = "pointer"
+
+    setTimeout (=> @paint()), 1000 / @fps
+
+  @randMax: (max) ->
     Math.floor(Math.random() * max)
 
 

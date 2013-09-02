@@ -20,22 +20,42 @@
 				canvasId: "bubblechart",
 				data: getData(),
 				metric: "watchers",
-				colors: ['#FF0000', '#00FF00', '#0000FF']
+				borderColor: "#ccc",
+				borderSize: 3,
+				usedArea: 0.2
 			});
+
+			chart.paint();
 
 			function getData() {
 				return [{
 					label: "thing10",
-					data: 10
+					data: 10,
+					fillColor: '#B21212'
 				},{
 					label: "thing5",
-					data: 5
+					data: 5,
+					fillColor: "#FFFC19"
 				},{
 					label: "thing35",
-					data:35
+					data:35,
+					fillColor: "#1485CC"
 				},{
 					label: "thing",
-					data: 10
+					data: 10,
+					fillColor: "#0971B2"
+				},{
+					label: "morething5",
+					data: 2,
+					fillColor: "#FFFC19"
+				},{
+					label: "morething35",
+					data: 12,
+					fillColor: "#1485CC"
+				},{
+					label: "morething",
+					data: 17,
+					fillColor: "#0971B2"
 				}];
 			}
 		})();

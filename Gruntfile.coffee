@@ -46,7 +46,7 @@ module.exports = (grunt) ->
 
     watch:
       files: ['<%= coffee.compile.src %>'],
-      tasks: ['coffee:compile', 'concat', 'test']
+      tasks: ['coffee:compile', 'concat']
 
   # Load Package Tasks
   grunt.loadNpmTasks 'grunt-contrib-clean'
@@ -58,5 +58,5 @@ module.exports = (grunt) ->
 
   # Define Custom Tasks
   grunt.registerTask 'test', ['qunit']
-  grunt.registerTask 'dist', ['clean', 'coffee:compile', 'concat:dist', 'test', 'uglify:dist']
-  grunt.registerTask 'travis', ['clean', 'coffee:compile', 'concat:dist', 'test']
+  grunt.registerTask 'dist', ['clean', 'coffee:compile', 'concat:dist', 'uglify:dist']
+  grunt.registerTask 'travis', ['clean', 'coffee:compile', 'concat:dist']
