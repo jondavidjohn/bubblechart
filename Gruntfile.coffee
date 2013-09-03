@@ -21,7 +21,7 @@ module.exports = (grunt) ->
       options:
         banner: '''
                 /**
-                 * BubbleChartJS (<%= pkg.version %>)
+                 * BubbleChart (<%= pkg.version %>)
                  *
                  * Author: <%= pkg.author %>
                  * Homepage: <%= pkg.homepage %>

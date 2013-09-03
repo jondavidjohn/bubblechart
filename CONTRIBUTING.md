@@ -21,8 +21,8 @@ Some things you should be familiar with before getting started
 
 Once you have NPM and Grunt installed, clone the repository and install all dependancies
 
-    git clone git@.....git bubblechartjs
-    cd bubblechartjs
+    git clone git@.....bubblechart.git bubblechart
+    cd bubblechart
     npm install
 
 Then to build a distribution run this grunt task

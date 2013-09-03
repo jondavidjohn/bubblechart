@@ -1,8 +1,8 @@
-# BubblechartJS
+# Bubblechart
 
-[![Build Status](https://travis-ci.org/jondavidjohn/bubblechartjs.png?branch=master,develop)](https://travis-ci.org/jondavidjohn/bubblechartjs)
+[![Build Status](https://travis-ci.org/jondavidjohn/bubblechart.png?branch=master,develop)](https://travis-ci.org/jondavidjohn/bubblechart)
 
-BubblechartJS is a JavaScript module for the comparative visualization of two dimensional data in Bubble Chart.
+Bubblechart is a JavaScript module for the comparative visualization of two dimensional data in Bubble Chart.
 
 ### Why write it in Coffeescript?
 
@@ -21,5 +21,5 @@ Most all other major browsers have support for `<canvas>`.
 
 ## Development
 
-see [CONTRIBUTING.md](https://github.com/jondavidjohn/bubblechartjs/edit/develop/CONTRIBUTING.md)
+see [CONTRIBUTING.md](https://github.com/jondavidjohn/bubblechart/edit/develop/CONTRIBUTING.md)
 
