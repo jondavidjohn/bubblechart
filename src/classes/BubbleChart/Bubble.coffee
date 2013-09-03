@@ -23,13 +23,10 @@ class BubbleChart.Bubble
 
   advance: (chart) ->
     if @grabbed
-      if chart.mouse.moving and
-      chart.mouse.last? and
-      chart.mouse.current?
-        last = chart.mouse.last
-        cur = chart.mouse.current
-        @position.x += cur.x - last.x
-        @position.y += cur.y - last.y
+      m = chart.mouse
+      if m.current? and m.diff?
+        @position.x = m.current.x - m.diff.x
+        @position.y = m.current.y - m.diff.y
     else
       v = @getVelocity()
       @position.x += v.x

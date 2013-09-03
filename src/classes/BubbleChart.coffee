@@ -5,7 +5,6 @@ class @BubbleChart
     @colors = o.colors
     @speed = o.speed || 20
     @fps = o.fps || 60
-    @dragging = false
 
     # Calc Canvas metrics
     @canvas = document.getElementById o.canvasId
@@ -16,30 +15,40 @@ class @BubbleChart
 
     # Mouse
     @mouse =
-      last: null
       current: null
       bubble: null
+      diff: null
       moving: false
+      dragging: false
 
-    @canvas.onmousemove = do =>
+    @canvas.onmousemove = @canvas.ontouchmove = do =>
       stop
       (e) =>
         clearTimeout stop
         e.offsetX ?= e.layerX
         e.offsetY ?= e.layerY
-        if @mouse.current?
-          @mouse.last = new BubbleChart.Point(@mouse.current.x, @mouse.current.y)
         @mouse.current = new BubbleChart.Point(e.offsetX, e.offsetY)
         @mouse.moving = true
+        if @mouse.bubble? and @mouse.bubble.grabbed
+          e.preventDefault()
+          @mouse.dragging = true
         stop = setTimeout (=> @mouse.moving = false), 50
 
-    @canvas.onmousedown  = (e) =>
+    @canvas.onmousedown = @canvas.ontouchstart = (e) =>
       if @mouse.bubble?
-        @mouse.bubble.grabbed = @dragging = true
+        e.preventDefault()
+        @mouse.bubble.grabbed = true
+        @mouse.diff = @mouse.current.diff(@mouse.bubble.position)
+        @mouse.current = null
 
-    @canvas.onmouseup  = (e) =>
+    @canvas.onmouseup = @canvas.onmouseout = @canvas.ontouchend = (e) =>
       if @mouse.bubble?
-        @mouse.bubble.grabbed = @dragging = false
+        e.preventDefault()
+        @mouse.bubble.grabbed = false
+        @mouse.diff = null
+        unless @mouse.dragging
+          console.log "No Drag, just click-ish"
+        @mouse.dragging = false
 
     @metricTotal = (d.data for d in @data).reduce (a, b) -> a + b
 
@@ -72,11 +81,13 @@ class @BubbleChart
 
     @canvas.context.clearRect(0,0, @canvas.width, @canvas.height)
 
-    document.body.style.cursor = "default" if not @dragging
-    @mouse.bubble = null if not @dragging
+    if @mouse.bubble?
+      document.body.style.cursor = "default" unless @mouse.bubble.grabbed
+      @mouse.bubble = null unless @mouse.bubble.grabbed
+
     for b in @bubbles
       b.paint(@canvas.context)
-      if @mouse.current? and not @dragging
+      if @mouse.current? and not (@mouse.bubble? and @mouse.bubble.grabbed)
         if @canvas.context.isPointInPath(@mouse.current.x, @mouse.current.y)
           @mouse.bubble = b
 
