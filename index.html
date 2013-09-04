@@ -11,7 +11,7 @@
 </head>
 <body>
 	<canvas id="bubblechart" height="500" width="600"></canvas>
-	<script src="dist/bubblechart.js"></script>
+	<script src="dist/bubblechart.min.js"></script>
 	<script>
 		(function() {
 			var chart;
@@ -20,6 +20,7 @@
 				canvasId: "bubblechart",
 				data: getData(),
 				metric: "watchers",
+				textColor: "#FFF",
 				borderColor: "#ccc",
 				borderSize: 3,
 				usedArea: 0.2
@@ -29,31 +30,31 @@
 
 			function getData() {
 				return [{
-					label: "thing10",
+					label: "Astring",
 					data: 10,
 					fillColor: '#B21212'
 				},{
-					label: "thing5",
+					label: "Bstring",
 					data: 5,
 					fillColor: "#FFFC19"
 				},{
-					label: "thing35",
+					label: "Cstring",
 					data:35,
 					fillColor: "#1485CC"
 				},{
-					label: "thing",
+					label: "Dstringcutmeoffplease",
 					data: 10,
 					fillColor: "#0971B2"
 				},{
-					label: "morething5",
+					label: "Estring",
 					data: 2,
 					fillColor: "#FFFC19"
 				},{
-					label: "morething35",
+					label: "Fstring",
 					data: 12,
 					fillColor: "#1485CC"
 				},{
-					label: "morething",
+					label: "Gstring",
 					data: 17,
 					fillColor: "#0971B2"
 				}];
