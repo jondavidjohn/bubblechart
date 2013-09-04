@@ -22,6 +22,8 @@ class BubbleChart.Bubble
     @pointOfGravity = o.pointOfGravity
     @href = o.href
     @label = o.label
+    @metric = o.metric
+    @data = o.data
     @color = o.color
     @borderColor = o.borderColor
     @textColor = o.textColor
@@ -32,6 +34,8 @@ class BubbleChart.Bubble
     @reach = @radius
     if @borderSize?
       @reach += @borderSize
+
+    @popover = new BubbleChart.Popover(@)
 
   getVelocity: () ->
     x: 0.04 * (@pointOfGravity.x - @position.x)

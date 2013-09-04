@@ -89,6 +89,8 @@ class @BubbleChart
       opts =
         href: d.href
         label: d.label
+        metric: d.metric || o.metric
+        data: d.data
         color: d.fillColor
         borderColor: d.borderColor || o.borderColor
         textColor: d.textColor || o.textColor
@@ -125,6 +127,7 @@ class @BubbleChart
 
     if @pointer.bubble?
       document.body.style.cursor = "pointer"
+      @pointer.bubble.popover.paint(@pointer, @canvas.context)
 
     setTimeout (=> @paint()), 1000 / @fps
 
