@@ -40,3 +40,5 @@ class BubbleChart.Pointer
             window.location.href = self.bubble.href
         self.dragging = false
 
+  grabbingBubble: ->
+    @bubble? and @bubble.grabbed

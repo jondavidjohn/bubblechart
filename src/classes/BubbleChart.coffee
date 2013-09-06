@@ -37,18 +37,21 @@ class @BubbleChart
     @colors = o.fillColors or []
     @fps = o.fps or 60
 
-    # Calc Canvas metrics
     @canvas = document.getElementById o.canvasId
-    @canvas.area = @canvas.height * @canvas.width
-    @canvas.usableArea = @canvas.area * (o.usedArea || 0.2)
-    @canvas.midpoint = new BubbleChart.Point(@canvas.width/2, @canvas.height/2)
-    @canvas.context = @canvas.getContext '2d'
 
     # Pointer Setup
     @pointer = new BubbleChart.Pointer()
-    @canvas.onmousemove = @canvas.ontouchmove = @pointer.e_move
-    @canvas.onmousedown = @canvas.ontouchstart = @pointer.e_grab
-    @canvas.onmouseup = @canvas.onmouseout = @canvas.ontouchend = @pointer.e_release
+
+    do (c = @canvas) =>
+      # Attach Canvas Mouse/Touch events
+      c.onmousemove = c.ontouchmove = @pointer.e_move
+      c.onmousedown = c.ontouchstart = @pointer.e_grab
+      c.onmouseup = c.onmouseout = c.ontouchend = @pointer.e_release
+      # Calculate Canvas Metrics
+      c.area = c.height * c.width
+      c.usableArea = c.area * (o.usedArea || 0.2)
+      c.midpoint = new BubbleChart.Point(c.width/2, c.height/2)
+      c.context = c.getContext '2d'
 
     @metricTotal = (d.data for d in @data).reduce (a, b) -> a + b
 
@@ -65,8 +68,10 @@ class @BubbleChart
         fillColor: d.fillColor or randColor
         borderColor: d.borderColor or o.borderColor
         textColor: d.textColor or o.textColor
+        textType: d.textType or o.textType
         borderSize: d.borderSize or o.borderSize
         radius: Math.sqrt(@canvas.usableArea * (d.data / @metricTotal)) / 2
+        popoverOpts: o.popoverOpts
         position: new BubbleChart.Point(
           BubbleChart.randMax(Math.sqrt(@canvas.area)),
           BubbleChart.randMax(Math.sqrt(@canvas.area))
@@ -76,11 +81,11 @@ class @BubbleChart
       @bubbles.push new BubbleChart.Bubble(opts)
 
 
-  paint: ->
+  paint: (_loop = true) ->
     for b in @bubbles
       b.advance @
       for bubble in @bubbles
-        if b.label isnt bubble.label and b.distanceFrom(bubble) < 0
+        if b.label isnt bubble.label and b.overlapsWith(bubble)
           b.resolveCollisionWith bubble
 
     @canvas.context.clearRect 0, 0, @canvas.width, @canvas.height
@@ -91,8 +96,7 @@ class @BubbleChart
 
     for b in @bubbles
       b.paint @canvas.context
-      if @pointer.current? and
-      not (@pointer.bubble? and @pointer.bubble.grabbed)
+      if @pointer.current? and not @pointer.grabbingBubble()
         if @canvas.context.isPointInPath @pointer.current.x, @pointer.current.y
           @pointer.bubble = b
 
@@ -100,7 +104,8 @@ class @BubbleChart
       document.body.style.cursor = "pointer"
       @pointer.bubble.popover.paint @pointer, @canvas.context
 
-    setTimeout (=> @paint()), 1000 / @fps
+    if _loop
+      setTimeout (=> @paint()), 1000 / @fps
 
   @randMax: (max) ->
     Math.floor Math.random() * max

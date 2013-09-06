@@ -3,18 +3,18 @@ class BubbleChart.Popover
   ###
   # Hover Popover
   ###
-  constructor : (bubble) ->
+  constructor : (bubble, o) ->
     @bubble = bubble
-    @blockColor = '#333'
-    @textColor = '#fff'
-    @blockOpacity = 0.6
+    @fillColor = o.fillColor or '#333'
+    @textColor = o.textColor or '#fff'
+    @textFont = o.textFont or 'helvetica'
+    @opacity = o.opacity or 0.6
     @lineHeight = 20
-
 
   paint: (pointer, context) ->
     return unless pointer.current?
 
-    context.font = '17px helvetica'
+    context.font = "17px #{@textFont}"
     label_measurement = context.measureText @bubble.label
     metric_measurement = context.measureText @bubble.metric
     lineWidth = if label_measurement.width > metric_measurement.width
@@ -25,12 +25,9 @@ class BubbleChart.Popover
     labelX = pointer.current.x - 14
     labelY = pointer.current.y - 26 - @lineHeight * 2
     triangle =
-      x:0
-      y:0
-      x2:0
-      y2:0
-      x3:0
-      y3:0
+      x: 0, y: 0
+      x2:0, y2:0
+      x3:0, y3:0
 
     if labelY < 0
       labelY = pointer.current.y + 26
@@ -51,8 +48,8 @@ class BubbleChart.Popover
       labelX -= labelX + lineWidth - context.canvas.width
 
     context.beginPath()
-    context.fillStyle = @blockColor
-    context.globalAlpha = @blockOpacity
+    context.fillStyle = @fillColor
+    context.globalAlpha = @opacity
 
     context.roundedRect labelX, labelY, lineWidth, @lineHeight * 2 + 10, 7
 
@@ -67,7 +64,7 @@ class BubbleChart.Popover
     context.fillStyle = @textColor
     context.fillText @bubble.label, labelX + 7, labelY + @lineHeight
 
-    context.font = '11px helvetica'
+    context.font = "11px #{@textFont}"
     detailX = labelX + 7
     detailY = labelY + @lineHeight * 2
     context.fillText "#{@bubble.data} #{@bubble.metric}", detailX, detailY

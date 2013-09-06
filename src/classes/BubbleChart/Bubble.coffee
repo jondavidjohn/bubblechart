@@ -28,6 +28,7 @@ class BubbleChart.Bubble
     @color = o.fillColor
     @borderColor = o.borderColor
     @textColor = o.textColor
+    @textType = o.textType
     @borderSize = o.borderSize
     @radius = o.radius
     @position = o.position
@@ -36,7 +37,7 @@ class BubbleChart.Bubble
     if @borderSize?
       @reach += @borderSize
 
-    @popover = new BubbleChart.Popover(@)
+    @popover = new BubbleChart.Popover(@, o.popoverOpts or {})
 
   getVelocity: () ->
     x: 0.04 * (@pointOfGravity.x - @position.x)
@@ -55,6 +56,9 @@ class BubbleChart.Bubble
 
   distanceFrom: (bubble) ->
     @position.distance(bubble.position) - (@reach + bubble.reach)
+
+  overlapsWith: (bubble) ->
+    @distanceFrom(bubble) < 0
 
   resolveCollisionWith: (bubble) ->
     currentDistance = @position.distance bubble.position
