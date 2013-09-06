@@ -10,15 +10,6 @@ class BubbleChart.Popover
     @blockOpacity = 0.6
     @lineHeight = 20
 
-  roundedRect: (context, x, y, w, h, r) ->
-    r = w / 2 if w < 2 * r
-    r = h / 2 if h < 2 * r
-    context.fillStyle = @blockColor
-    context.moveTo(x+r, y)
-    context.arcTo(x+w, y,   x+w, y+h, r)
-    context.arcTo(x+w, y+h, x,   y+h, r)
-    context.arcTo(x,   y+h, x,   y,   r)
-    context.arcTo(x,   y,   x+w, y,   r)
 
   paint: (pointer, context) ->
     return unless pointer.current?
@@ -63,18 +54,22 @@ class BubbleChart.Popover
     context.fillStyle = @blockColor
     context.globalAlpha = @blockOpacity
 
-    @roundedRect(context, labelX, labelY, lineWidth, @lineHeight * 2 + 10, 7)
+    context.roundedRect labelX, labelY, lineWidth, @lineHeight * 2 + 10, 7
 
-    context.moveTo(triangle.x,  triangle.y)
-    context.lineTo(triangle.x2, triangle.y2)
-    context.lineTo(triangle.x3, triangle.y3)
-    context.lineTo(triangle.x,  triangle.y)
+    context.moveTo triangle.x,  triangle.y
+    context.lineTo triangle.x2, triangle.y2
+    context.lineTo triangle.x3, triangle.y3
+    context.lineTo triangle.x,  triangle.y
     context.fill()
 
     context.globalAlpha = 1
+
     context.fillStyle = @textColor
-    context.fillText(@bubble.label, labelX + 7, labelY + @lineHeight)
+    context.fillText @bubble.label, labelX + 7, labelY + @lineHeight
+
     context.font = '11px helvetica'
-    context.fillText("#{@bubble.data} #{@bubble.metric}", labelX + 7 , labelY + @lineHeight * 2)
+    detailX = labelX + 7
+    detailY = labelY + @lineHeight * 2
+    context.fillText "#{@bubble.data} #{@bubble.metric}", detailX, detailY
 
     context.closePath()

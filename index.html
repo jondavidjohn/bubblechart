@@ -21,9 +21,7 @@
 				data: getData(),
 				metric: "watchers",
 				textColor: "#FFF",
-				borderColor: "#ccc",
-				borderSize: 3,
-				usedArea: 0.2
+				fillColors: ["#32B233", "#2454CD", "#113CBF"]
 			});
 
 			chart.paint();
@@ -31,32 +29,27 @@
 			function getData() {
 				return [{
 					label: "Astring",
+					href: "http://google.com",
 					data: 10,
-					fillColor: '#B21212'
+					fillColor: "#1485CC"
 				},{
 					label: "Bstring",
-					data: 5,
-					fillColor: "#FFFC19"
+					data: 5
 				},{
 					label: "Cstring",
-					data:35,
-					fillColor: "#1485CC"
+					data:35
 				},{
 					label: "Dstringcutmeoffplease",
-					data: 10,
-					fillColor: "#0971B2"
+					data: 10
 				},{
 					label: "Estring",
-					data: 2,
-					fillColor: "#FFFC19"
+					data: 2
 				},{
 					label: "Fstring",
-					data: 12,
-					fillColor: "#1485CC"
+					data: 12
 				},{
 					label: "Gstring",
-					data: 17,
-					fillColor: "#0971B2"
+					data: 17
 				}];
 			}
 		})();

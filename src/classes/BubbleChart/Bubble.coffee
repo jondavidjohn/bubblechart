@@ -19,12 +19,13 @@ class BubbleChart.Bubble
   ###
   constructor: (o) ->
     @grabbed = false
+    @bully = false
     @pointOfGravity = o.pointOfGravity
     @href = o.href
     @label = o.label
     @metric = o.metric
     @data = o.data
-    @color = o.color
+    @color = o.fillColor
     @borderColor = o.borderColor
     @textColor = o.textColor
     @borderSize = o.borderSize
@@ -56,24 +57,28 @@ class BubbleChart.Bubble
     @position.distance(bubble.position) - (@reach + bubble.reach)
 
   resolveCollisionWith: (bubble) ->
-    currentDistance = @position.distance(bubble.position)
-    currentRealDistance = @distanceFrom(bubble)
+    currentDistance = @position.distance bubble.position
+    currentRealDistance = @distanceFrom bubble
     if currentRealDistance < 0
       targetDistance = currentDistance - currentRealDistance
-      if (bubble.radius > @radius and not @grabbed) or bubble.grabbed
+      if (bubble.radius > @radius and not @grabbed) or
+      bubble.grabbed or
+      (bubble.bully and not @grabbed)
         rAngle = bubble.position.rAngle @position
-        @position.x = bubble.position.x + targetDistance * Math.cos(rAngle)
-        @position.y = bubble.position.y + targetDistance * Math.sin(rAngle)
+        @position.x = bubble.position.x + targetDistance * Math.cos rAngle
+        @position.y = bubble.position.y + targetDistance * Math.sin rAngle
+        @position.bully = true
       else
         rAngle = @position.rAngle bubble.position
-        bubble.position.x = @position.x + targetDistance * Math.cos(rAngle)
-        bubble.position.y = @position.y + targetDistance * Math.sin(rAngle)
+        bubble.position.x = @position.x + targetDistance * Math.cos rAngle
+        bubble.position.y = @position.y + targetDistance * Math.sin rAngle
+        bubble.bully = true
 
   paint: (context) ->
 
     context.beginPath()
     context.fillStyle = @color
-    context.arc(@position.x, @position.y, @radius, 0, Math.PI * 2, true)
+    context.arc @position.x, @position.y, @radius, 0, Math.PI * 2, true
     context.fill()
 
     if @borderColor?
@@ -88,14 +93,14 @@ class BubbleChart.Bubble
       if text_measurement.width + 12 < @diameter
         spacingX = @position.x - (text_measurement.width / 2)
         spacingY = @position.y + (14 / 2)
-        context.fillText(@label, spacingX, spacingY)
+        context.fillText @label, spacingX, spacingY
       else
         context.font = "12px helvetica"
         text_measurement = context.measureText @label
         if text_measurement.width + 7 < @diameter
           spacingX = @position.x - (text_measurement.width / 2)
           spacingY = @position.y + (4 / 2)
-          context.fillText(@label, spacingX, spacingY)
+          context.fillText @label, spacingX, spacingY
         else
           truncated_label = "#{@label}..."
           while truncated_label and text_measurement.width + 7 >= @diameter
@@ -109,6 +114,6 @@ class BubbleChart.Bubble
           if truncated_label
             spacingX = @position.x - (text_measurement.width / 2)
             spacingY = @position.y + (4 / 2)
-            context.fillText(truncated_label, spacingX, spacingY)
+            context.fillText truncated_label, spacingX, spacingY
 
     context.closePath()

@@ -12,12 +12,12 @@ class BubbleChart.Point
 
   # In Radians
   rAngle: (point) ->
-    Math.atan2(point.y - @y, point.x - @x)
+    Math.atan2 point.y - @y, point.x - @x
 
   diff: (point) ->
     x: @x - point.x
     y: @y - point.y
 
   distance: (point) ->
-    diff = @diff(point)
-    Math.sqrt((diff.x * diff.x) + (diff.y * diff.y))
+    diff = @diff point
+    Math.sqrt (diff.x * diff.x) + (diff.y * diff.y)
