@@ -23,14 +23,14 @@ class BubbleChart.Pointer
           self.dragging = true
         stop = setTimeout (=> self.moving = false), 50
 
-    @e_grab: (e) ->
+    @e_grab = (e) ->
       if self.bubble? and self.current?
         e.preventDefault()
         self.bubble.grabbed = true
         self.diff = self.current.diff self.bubble.position
         self.current = null
 
-    @e_release: (e) ->
+    @e_release = (e) ->
       if self.bubble?
         e.preventDefault()
         self.bubble.grabbed = false
