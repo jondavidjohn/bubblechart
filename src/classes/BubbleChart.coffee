@@ -108,8 +108,3 @@ class @BubbleChart
 
     if _loop
       setTimeout (=> @paint()), 1000 / @fps
-
-  @randMax: (max) ->
-    Math.floor Math.random() * max
-
-
