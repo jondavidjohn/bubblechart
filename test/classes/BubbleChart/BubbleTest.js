@@ -6,8 +6,12 @@ module('BubbleChart.Bubble Tests');
 		var opt,
 			opts = {
 				href: 'http://example.com',
-				color: 'red',
+				fillColor: 'red',
+				label: 'label',
+				textColor: 'textcolor',
+				textType: 'font',
 				borderColor: 'white',
+				borderSize: 3,
 				radius: 3,
 				position: {
 					x: 3,
@@ -24,13 +28,34 @@ module('BubbleChart.Bubble Tests');
 
 		equal(bubble.grabbed, false);
 		equal(bubble.href, 'http://example.com');
-		equal(bubble.color, 'red');
+		equal(bubble.fillColor, 'red');
 		equal(bubble.borderColor, 'white');
 		equal(bubble.radius, 3);
 		equal(bubble.position.x, 3);
 		equal(bubble.position.y, 6);
-		equal(bubble.velocity.x, 0);
-		equal(bubble.velocity.y, 0);
 	});
 
+	test('velocity', function() {
+		var bubble = generate();
+
+		equal(true, false);
+	});
+
+	test('distanceFrom', function() {
+		var bubble = generate();
+
+		equal(true, false);
+	});
+
+	test('overlapsWith', function() {
+		var bubble = generate();
+
+		equal(true, false);
+	});
+
+	test('resolveCollisionWith', function() {
+		var bubble = generate();
+
+		equal(true, false);
+	});
 })(BubbleChart.Bubble);

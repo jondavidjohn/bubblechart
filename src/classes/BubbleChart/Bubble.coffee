@@ -25,7 +25,7 @@ class BubbleChart.Bubble
     @label = o.label
     @metric = o.metric
     @data = o.data
-    @color = o.fillColor
+    @fillColor = o.fillColor
     @borderColor = o.borderColor
     @textColor = o.textColor
     @textType = o.textType
@@ -81,7 +81,7 @@ class BubbleChart.Bubble
   paint: (context) ->
 
     context.beginPath()
-    context.fillStyle = @color
+    context.fillStyle = @fillColor
     context.arc @position.x, @position.y, @radius, 0, Math.PI * 2, true
     context.fill()
 

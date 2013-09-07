@@ -34,7 +34,7 @@ class @BubbleChart
   constructor: (o) ->
     @data = o.data
     @metric = o.metric
-    @colors = o.fillColors or []
+    @fillColors = o.fillColors or []
     @fps = o.fps or 60
 
     @canvas = document.getElementById o.canvasId
@@ -59,7 +59,9 @@ class @BubbleChart
 
     for d in @data
 
-      randColor = @colors[BubbleChart.randMax @colors.length if @colors.length]
+      randColor = do (c = @fillColors) ->
+        c[BubbleChart.randMax c.length if c.length]
+
       opts =
         href: d.href
         label: d.label

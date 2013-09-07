@@ -19,7 +19,7 @@
 					data: 10
 				}],
 				metric: 'metric',
-				colors: ['a', 'b', 'c', 'd']
+				fillColors: ['a', 'b', 'c', 'd']
 			};
 
 		for (opt in override_opts) { opts[opt] = override_opts[opt]; }
@@ -28,12 +28,10 @@
 
 	test('constructor', function() {
 		var chart = generate();
-
 		equal(chart.canvas.id, 'test_canvas');
 		equal(chart.data.length, chart.bubbles.length);
 		equal(chart.metric, 'metric');
-		equal(chart.colors.length, 4);
+		equal(chart.fillColors.length, 4);
 		equal(chart.metricTotal, 60);
-
 	});
 })();
