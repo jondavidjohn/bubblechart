@@ -58,5 +58,5 @@ module.exports = (grunt) ->
 
   # Define Custom Tasks
   grunt.registerTask 'test', ['qunit']
-  grunt.registerTask 'dist', ['clean', 'coffee:compile', 'concat:dist', 'uglify:dist']
-  grunt.registerTask 'travis', ['clean', 'coffee:compile', 'concat:dist']
+  grunt.registerTask 'default', ['clean', 'coffee:compile', 'concat:dist', 'test']
+  grunt.registerTask 'dist', ['default', 'uglify:dist']

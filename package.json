@@ -21,6 +21,6 @@
     "grunt-contrib-concat": "latest"
   },
   "scripts": {
-    "test": "grunt travis"
+    "test": "grunt"
   }
 }
