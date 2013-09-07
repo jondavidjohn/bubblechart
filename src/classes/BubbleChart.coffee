@@ -60,7 +60,7 @@ class @BubbleChart
     for d in @data
 
       randColor = do (c = @fillColors) ->
-        c[BubbleChart.randMax c.length if c.length]
+        c[Math.randMax c.length if c.length]
 
       opts =
         href: d.href
@@ -75,8 +75,8 @@ class @BubbleChart
         radius: Math.sqrt(@canvas.usableArea * (d.data / @metricTotal)) / 2
         popoverOpts: o.popoverOpts
         position: new BubbleChart.Point(
-          BubbleChart.randMax(Math.sqrt(@canvas.area)),
-          BubbleChart.randMax(Math.sqrt(@canvas.area))
+          Math.randMax(Math.sqrt(@canvas.area)),
+          Math.randMax(Math.sqrt(@canvas.area))
         )
         pointOfGravity: @canvas.midpoint
 
