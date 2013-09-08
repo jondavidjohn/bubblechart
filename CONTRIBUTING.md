@@ -6,8 +6,8 @@ Some things you should be familiar with before getting started
 
   - [Coffeescript](http://coffeescript.org/)
   - Unit testing (with [QUnit](http://qunitjs.com))
-  - [Grunt](http://gruntjs.org) ( **install this** )
-  - [NPM](https://npmjs.org/) ( **install this** )
+  - [Grunt](http://gruntjs.org) (available via `npm install -g grunt-cli`)
+  - [Node/NPM](https://npmjs.org/) (available via homebrew)
 
 ## Project Layout
 
@@ -58,11 +58,11 @@ sure to organize and produce tests that fit the patterns present.
 
 Try your best to follow the present code formatting and patterns in place.
 
-### Pull Request
+### Pull Requests
 
 Pull Request requirements
 
   - Include a clear explaination of the problem (or enhancement)
   - Include a use case that clearly demonstrates said issue (or enhancement)
   - Clean commit history (squash where it makes sense)
-  - **Relevant Tests** (either updated and/or new)
+  - Relevant Tests (either updated and/or new)
