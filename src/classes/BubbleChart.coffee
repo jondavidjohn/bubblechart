@@ -50,7 +50,7 @@ class @BubbleChart
       # Calculate Canvas Metrics
       c.area = c.height * c.width
       c.usableArea = c.area * (o.usedArea || 0.2)
-      c.midpoint = new BubbleChart.Point(c.width/2, c.height/2)
+      c.midpoint = new BubbleChart.Point(c.width / 2, c.height / 2)
       c.context = c.getContext '2d'
 
     @metricTotal = (d.data for d in @data).reduce (a, b) -> a + b
@@ -60,7 +60,7 @@ class @BubbleChart
     for d in @data
 
       randColor = do (c = @fillColors) ->
-        c[Math.randMax c.length if c.length]
+        c[Math.randInt c.length if c.length]
 
       opts =
         href: d.href
@@ -75,8 +75,8 @@ class @BubbleChart
         radius: Math.sqrt(@canvas.usableArea * (d.data / @metricTotal)) / 2
         popoverOpts: o.popoverOpts
         position: new BubbleChart.Point(
-          Math.randMax(Math.sqrt(@canvas.area)),
-          Math.randMax(Math.sqrt(@canvas.area))
+          Math.randInt(Math.sqrt(@canvas.area)),
+          Math.randInt(Math.sqrt(@canvas.area))
         )
         pointOfGravity: @canvas.midpoint
 

@@ -7,5 +7,5 @@ CanvasRenderingContext2D::roundedRect = (x, y, w, h, r) ->
   @arcTo  x,   y+h, x,   y,   r
   @arcTo  x,   y,   x+w, y,   r
 
-Math.randMax = (max) ->
+Math.randInt = (max = 100) ->
   Math.floor Math.random() * max
