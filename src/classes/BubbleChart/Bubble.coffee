@@ -74,7 +74,7 @@ class BubbleChart.Bubble
         rAngle = @position.rAngle bubble.position
         @position.x = bubble.position.x + targetDistance * Math.cos rAngle
         @position.y = bubble.position.y + targetDistance * Math.sin rAngle
-        @position.bully = true
+        @bully = true
       else # move bubble
         rAngle = bubble.position.rAngle @position
         bubble.position.x = @position.x + targetDistance * Math.cos rAngle

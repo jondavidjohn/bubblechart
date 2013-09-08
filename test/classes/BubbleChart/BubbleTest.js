@@ -108,7 +108,7 @@
 		equal(true, bubble2.hasSpatialInferiorityTo(bubble1));
 	});
 
-	test('resolveCollisionWith', function() {
+	test('resolveCollisionWith - with spatial inferiority', function() {
 		var bubble1 = generate({
 				position: new Point(5, 10),
 				radius: 2
@@ -119,7 +119,43 @@
 			});
 
 		equal(bubble1.overlapsWith(bubble2), true);
+
+		bubble1.hasSpatialInferiorityTo = function (b) {
+			return true;
+		};
+
 		bubble1.resolveCollisionWith(bubble2);
+		equal(bubble1.position.x, 5.000000000000001);
+		equal(bubble1.position.y, 18);
+		equal(bubble2.position.x, 5);
+		equal(bubble2.position.y, 7);
+		equal(bubble1.bully, true);
+		equal(bubble1.overlapsWith(bubble2), false);
+	});
+
+	test('resolveCollisionWith - with spatial priority', function() {
+		var bubble1 = generate({
+				position: new Point(5, 10),
+				radius: 2
+			}),
+			bubble2 = generate({
+				position: new Point(5, 7),
+				radius: 3
+			});
+
+		equal(bubble1.overlapsWith(bubble2), true);
+
+		bubble1.hasSpatialInferiorityTo = function (b) {
+			return false;
+		};
+
+		bubble1.resolveCollisionWith(bubble2);
+		equal(bubble1.position.x, 5);
+		equal(bubble1.position.y, 10);
+		equal(bubble2.position.x, 5.000000000000001);
+		equal(bubble2.position.y, -1);
+		equal(bubble1.bully, false);
+		equal(bubble2.bully, true);
 		equal(bubble1.overlapsWith(bubble2), false);
 	});
 })(BubbleChart.Bubble, BubbleChart.Point);
