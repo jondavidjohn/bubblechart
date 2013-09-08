@@ -83,7 +83,7 @@
 		equal(bubble3.overlapsWith(bubble1), false);
 	});
 
-	test('hasSpatialPriorityOver', function() {
+	test('hasSpatialInferiorityTo', function() {
 		var bubble1 = generate({
 				radius: 2
 			}),
@@ -92,21 +92,20 @@
 			});
 
 		// Bigger
-		equal(true, bubble2.hasSpatialPriorityOver(bubble1));
+		equal(true, bubble1.hasSpatialInferiorityTo(bubble2));
 
 		// Grabbed
-		bubble2.grabbed = true;
-		equal(true, bubble2.hasSpatialPriorityOver(bubble1));
-		equal(grabbed, bubble2.hasSpatialPriorityOver(bubble1));
-		bubble2.grabbed = false;
+		bubble1.grabbed = true;
+		equal(true, bubble2.hasSpatialInferiorityTo(bubble1));
+		bubble1.grabbed = false;
 
 		// Bully (been pushed by another)
 		bubble2.bully = true;
-		equal(true, bubble2.hasSpatialPriorityOver(bubble1));
+		equal(true, bubble1.hasSpatialInferiorityTo(bubble2));
 
 		// Grabbed beats bully
 		bubble1.grabbed = true;
-		equal(true, bubble1.hasSpatialPriorityOver(bubble2));
+		equal(true, bubble2.hasSpatialInferiorityTo(bubble1));
 	});
 
 	test('resolveCollisionWith', function() {

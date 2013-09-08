@@ -8,7 +8,7 @@ class BubbleChart.Point
 
   # In Degrees
   angle: (point) ->
-    @rAngle(point) * 180 / Math.PI
+    @rAngle(point) * 180 / Math.PI + 180
 
   # In Radians
   rAngle: (point) ->

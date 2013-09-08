@@ -60,26 +60,28 @@ class BubbleChart.Bubble
   overlapsWith: (bubble) ->
     @distanceFrom(bubble) < 0
 
+  hasSpatialInferiorityTo: (bubble) ->
+    (bubble.radius > @radius and not @grabbed) or
+    bubble.grabbed or
+    (bubble.bully and not @grabbed)
+
   resolveCollisionWith: (bubble) ->
-    currentDistance = @position.distance bubble.position
-    currentRealDistance = @distanceFrom bubble
-    if currentRealDistance < 0
+    if @overlapsWith bubble
+      currentDistance = @position.distance bubble.position
+      currentRealDistance = @distanceFrom bubble
       targetDistance = currentDistance - currentRealDistance
-      if (bubble.radius > @radius and not @grabbed) or
-      bubble.grabbed or
-      (bubble.bully and not @grabbed)
+      if @hasSpatialInferiorityTo bubble # move @
         rAngle = @position.rAngle bubble.position
         @position.x = bubble.position.x + targetDistance * Math.cos rAngle
         @position.y = bubble.position.y + targetDistance * Math.sin rAngle
         @position.bully = true
-      else
+      else # move bubble
         rAngle = bubble.position.rAngle @position
         bubble.position.x = @position.x + targetDistance * Math.cos rAngle
         bubble.position.y = @position.y + targetDistance * Math.sin rAngle
         bubble.bully = true
 
   paint: (context) ->
-
     context.beginPath()
     context.fillStyle = @fillColor
     context.arc @position.x, @position.y, @radius, 0, Math.PI * 2, true

@@ -36,7 +36,7 @@ class BubbleChart.Pointer
         self.bubble.grabbed = false
         self.diff = null
         unless self.dragging
-          if window?
+          if window? and self.bubble.href?
             window.location.href = self.bubble.href
         self.dragging = false
 
