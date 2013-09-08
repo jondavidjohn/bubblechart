@@ -12,7 +12,7 @@ class BubbleChart.Point
 
   # In Radians
   rAngle: (point) ->
-    Math.atan2 point.y - @y, point.x - @x
+    Math.atan2 @y - point.y, @x - point.x
 
   diff: (point) ->
     x: @x - point.x

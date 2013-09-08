@@ -1,6 +1,5 @@
-module('BubbleChart.Bubble Tests');
-
-(function(Bubble) {
+(function(Bubble, Point) {
+	module('BubbleChart.Bubble Tests');
 
 	function generate(override_opts) {
 		var opt,
@@ -12,11 +11,9 @@ module('BubbleChart.Bubble Tests');
 				textType: 'font',
 				borderColor: 'white',
 				borderSize: 3,
+				pointOfGravity: new Point(12, 12),
 				radius: 3,
-				position: {
-					x: 3,
-					y: 6
-				}
+				position: new Point(3, 6)
 			};
 
 		for (opt in override_opts) { opts[opt] = override_opts[opt]; }
@@ -36,26 +33,94 @@ module('BubbleChart.Bubble Tests');
 	});
 
 	test('velocity', function() {
-		var bubble = generate();
+		var bubble = generate({
+			position: new Point(5, 10),
+			pointOfGravity: new Point(15, 15)
+		});
 
-		equal(true, false);
+		equal(bubble.getVelocity().x, 0.4);
+		equal(bubble.getVelocity().y, 0.2);
+
 	});
 
 	test('distanceFrom', function() {
-		var bubble = generate();
+		var bubble1 = generate({
+				position: new Point(5, 10),
+				radius: 5
+			}),
+			bubble2 = generate({
+				position: new Point(20, 7),
+				radius: 9
+			}),
+			bubble3 = generate({
+				position: new Point(12, 18),
+				radius: 2
+			});
 
-		equal(true, false);
+		equal(bubble1.distanceFrom(bubble2), -4.702941459221645);
+		equal(bubble2.distanceFrom(bubble1), -4.702941459221645);
+		equal(bubble2.distanceFrom(bubble3), -3.398529491264556);
+		equal(bubble3.distanceFrom(bubble1), -2.36985418726535);
 	});
 
 	test('overlapsWith', function() {
-		var bubble = generate();
+		var bubble1 = generate({
+				position: new Point(5, 10),
+				radius: 2
+			}),
+			bubble2 = generate({
+				position: new Point(5, 7),
+				radius: 3
+			}),
+			bubble3 = generate({
+				position: new Point(12, 18),
+				radius: 2
+			});
 
-		equal(true, false);
+		equal(bubble1.overlapsWith(bubble2), true);
+		equal(bubble2.overlapsWith(bubble1), true);
+		equal(bubble2.overlapsWith(bubble3), false);
+		equal(bubble3.overlapsWith(bubble1), false);
+	});
+
+	test('hasSpatialPriorityOver', function() {
+		var bubble1 = generate({
+				radius: 2
+			}),
+			bubble2 = generate({
+				radius: 3
+			});
+
+		// Bigger
+		equal(true, bubble2.hasSpatialPriorityOver(bubble1));
+
+		// Grabbed
+		bubble2.grabbed = true;
+		equal(true, bubble2.hasSpatialPriorityOver(bubble1));
+		equal(grabbed, bubble2.hasSpatialPriorityOver(bubble1));
+		bubble2.grabbed = false;
+
+		// Bully (been pushed by another)
+		bubble2.bully = true;
+		equal(true, bubble2.hasSpatialPriorityOver(bubble1));
+
+		// Grabbed beats bully
+		bubble1.grabbed = true;
+		equal(true, bubble1.hasSpatialPriorityOver(bubble2));
 	});
 
 	test('resolveCollisionWith', function() {
-		var bubble = generate();
+		var bubble1 = generate({
+				position: new Point(5, 10),
+				radius: 2
+			}),
+			bubble2 = generate({
+				position: new Point(5, 7),
+				radius: 3
+			});
 
-		equal(true, false);
+		equal(bubble1.overlapsWith(bubble2), true);
+		bubble1.resolveCollisionWith(bubble2);
+		equal(bubble1.overlapsWith(bubble2), false);
 	});
-})(BubbleChart.Bubble);
+})(BubbleChart.Bubble, BubbleChart.Point);

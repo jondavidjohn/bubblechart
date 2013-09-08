@@ -68,12 +68,12 @@ class BubbleChart.Bubble
       if (bubble.radius > @radius and not @grabbed) or
       bubble.grabbed or
       (bubble.bully and not @grabbed)
-        rAngle = bubble.position.rAngle @position
+        rAngle = @position.rAngle bubble.position
         @position.x = bubble.position.x + targetDistance * Math.cos rAngle
         @position.y = bubble.position.y + targetDistance * Math.sin rAngle
         @position.bully = true
       else
-        rAngle = @position.rAngle bubble.position
+        rAngle = bubble.position.rAngle @position
         bubble.position.x = @position.x + targetDistance * Math.cos rAngle
         bubble.position.y = @position.y + targetDistance * Math.sin rAngle
         bubble.bully = true
