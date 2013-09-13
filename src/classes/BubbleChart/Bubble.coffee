@@ -44,8 +44,9 @@ class BubbleChart.Bubble
     @distanceFrom(bubble) < 0
 
   hasSpatialInferiorityTo: (bubble) ->
-    (bubble.radius > @radius and not @grabbed) or
     bubble.grabbed or
+    (bubble.radius > @radius and not @grabbed) or
+    (bubble.radius > @radius and (@bully and bubble.bully) and not @grabbed) or
     (bubble.bully and not @grabbed)
 
   resolveCollisionWith: (bubble) ->
