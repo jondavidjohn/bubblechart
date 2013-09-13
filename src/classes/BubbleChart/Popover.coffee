@@ -14,7 +14,7 @@ class BubbleChart.Popover
   paint: (pointer, context) ->
     return unless pointer.current?
 
-    context.font = "17px #{@textFont}"
+    context.font = "17px '#{@textFont}'"
     label_measurement = context.measureText @bubble.label
     metric_measurement = context.measureText @bubble.metric
     lineWidth = if label_measurement.width > metric_measurement.width

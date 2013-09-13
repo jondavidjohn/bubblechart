@@ -1,22 +1,5 @@
 class BubbleChart.Bubble
 
-  ###
-  # BubbleChart.Bubble
-  #
-  #  Options
-  #
-  #   - pointOfGravity / Point to which this bubble with move
-  #     towards (BubbleChart.Point)
-  #   - href / The href to be opened on single click
-  #   - label / Name of the bubble
-  #   - color / Fill color of the bubble
-  #   - borderColor / The color of the border
-  #   - textColor / The color of the text
-  #   - borderSize / The size of the border
-  #   - radius / The radius of the bubble
-  #   - position / The center position of the bubble (BubbleChart.Point)
-  #
-  ###
   constructor: (o) ->
     @grabbed = false
     @bully = false
@@ -28,7 +11,7 @@ class BubbleChart.Bubble
     @fillColor = o.fillColor
     @borderColor = o.borderColor
     @textColor = o.textColor
-    @textType = o.textType
+    @textFont = o.textFont or "helvetica"
     @borderSize = o.borderSize
     @radius = o.radius
     @position = o.position
@@ -81,6 +64,20 @@ class BubbleChart.Bubble
         bubble.position.y = @position.y + targetDistance * Math.sin rAngle
         bubble.bully = true
 
+  pushAwayFromEdges: (canvas, gutter) ->
+    if @position.y - @reach + gutter < 0
+      @position.y = @reach - gutter
+      @bully = true
+    else if @position.y + @reach - gutter > canvas.height
+      @position.y = canvas.height - @reach + gutter
+      @bully = true
+    else if @position.x + @reach - gutter > canvas.width
+      @position.x = canvas.width - @reach + gutter
+      @bully = true
+    else if @position.x - @reach + gutter < 0
+      @position.x = @reach - gutter
+      @bully = true
+
   paint: (context) ->
     context.beginPath()
     context.fillStyle = @fillColor
@@ -92,8 +89,8 @@ class BubbleChart.Bubble
       context.strokeStyle = @borderColor
       context.stroke()
 
-    if @textColor?
-      context.font = "20px helvetica"
+    if @textColor
+      context.font = "20px '#{@textFont}'"
       context.fillStyle = @textColor
       text_measurement = context.measureText @label
       if text_measurement.width + 12 < @diameter

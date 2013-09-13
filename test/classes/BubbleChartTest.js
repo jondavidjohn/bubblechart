@@ -34,4 +34,37 @@
 		equal(chart.fillColors.length, 4);
 		equal(chart.metricTotal, 60);
 	});
+
+	test('attribution-before-default', function() {
+		var chart = generate();
+		notStrictEqual(chart.canvas.previousSibling.innerHTML.indexOf('https://github.com/jondavidjohn/bubblechart'), -1);
+	});
+	test('attribution-before', function() {
+		var chart = generate({ attribution: 'before' });
+		notStrictEqual(chart.canvas.previousSibling.innerHTML.indexOf('https://github.com/jondavidjohn/bubblechart'), -1);
+	});
+	test('attribution-after', function() {
+		var chart = generate({ attribution: 'after' });
+		notStrictEqual(chart.canvas.nextSibling.innerHTML.indexOf('https://github.com/jondavidjohn/bubblechart'), -1);
+	});
+	test('attribution-off', function() {
+		var chart = generate({ attribution: false }),
+			prev_sibling = chart.canvas.previousSibling,
+			next_sibling = chart.canvas.nextSibling,
+			assertions = 0;
+
+
+
+		if ('innerHTML' in next_sibling) {
+			assertions++;
+			equal(next_sibling.innerHTML.indexOf('https://github.com/jondavidjohn/bubblechart'), -1);
+		}
+
+		if ('innerHTML' in prev_sibling) {
+			assertions++;
+			equal(prev_sibling.innerHTML.indexOf('https://github.com/jondavidjohn/bubblechart'), -1);
+		}
+
+		expect(assertions);
+	});
 })();
