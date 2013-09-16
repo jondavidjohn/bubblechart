@@ -36,8 +36,21 @@ class @BubbleChart
       c.usableArea = c.area * (o.usedArea || 0.2)
       c.midpoint = new BubbleChart.Point(c.width / 2, c.height / 2)
       c.context = c.getContext '2d'
+      # Adjust for retina if needed
+      if window.devicePixelRatio?
+        ratio = if window.devicePixelRatio > 1 and c.context.webkitBackingStorePixelRatio < 2
+          window.devicePixelRatio
+        else
+          1
+        if ratio > 1
+          c.width = c.width * ratio
+          c.height = c.height * ratio
+          c.style.width = "100%"
+          c.style.height = "100%"
+          c.context.scale(ratio, ratio)
 
-    @reload()
+    if @data.length
+      @reload()
 
 
   reload: () ->

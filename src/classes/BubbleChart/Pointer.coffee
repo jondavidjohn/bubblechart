@@ -42,3 +42,10 @@ class BubbleChart.Pointer
 
   grabbingBubble: ->
     @bubble? and @bubble.grabbed
+
+  getPixelRatio: (el) ->
+      if window.devicePixelRatio?
+        ratio = if window.devicePixelRatio > 1 and c.context.webkitBackingStorePixelRatio < 2
+          window.devicePixelRatio
+        else
+          1

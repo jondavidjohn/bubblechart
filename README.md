@@ -15,9 +15,15 @@ your configuration options, then to create the chart, just call `.paint()`
 
 ```js
 chart = new BubbleChart({
-
+  "canvasId": "bubblechart",
+  "metric": "Kb",
+  "usedArea": 0.35,
+  "contain": true,
+  "popoverOpts": {
+    "textFont": "Open Sans",
+  },
+  "data" : myCustomData()
 });
-
 chart.paint();
 ```
 
@@ -34,11 +40,20 @@ This is the exploded view of possbile options (with included defaults)
     colors: [],      // Array of colors to randomly choose from if data
                      // object lacks fillColor
 
+    contain: false,       // keep bubbles within the canvas
+    gutter: 0,            // if contain, allow bubbles to overlap the canvas border this much
     fps: 60,              // The draw rate/speed
     borderColor: "",      // Global Bubble border color
     borderSize: 0,        // Global Bubble border size
     textColor: "#fff"     // Bubble label color
     textType: "helvetica" // Font
+
+    popoverOpts: {        // Options that control the look and feel of the hover popover
+      textFont: 'helvetica',
+      textColor: '#fff',
+      fillColor: '#333',
+      opacity: 0.6,
+    }
   }
 ```
 
@@ -60,11 +75,6 @@ get the visual representation of your data.
     borderSize: 3,
   }
 ```
-
-## Process your own data
-
-Generally speaking, you can use any data source that you can manipulate into
-compatible data objects.
 
 ## Requirements
 
