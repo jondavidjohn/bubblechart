@@ -43,10 +43,10 @@ class @BubbleChart
         else
           1
         if ratio > 1
+          c.style.height = "#{c.height}px"
+          c.style.width = "#{c.width}px"
           c.width = c.width * ratio
           c.height = c.height * ratio
-          c.style.width = "100%"
-          c.style.height = "100%"
           c.context.scale(ratio, ratio)
 
     if @data.length
