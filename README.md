@@ -2,7 +2,7 @@
 
 [![Build Status (master,develop)](https://travis-ci.org/jondavidjohn/bubblechart.png?branch=master,develop)](https://travis-ci.org/jondavidjohn/bubblechart)
 
-BubbleChart is a JavaScript module for the comparative visualization of two dimensional data in bubble chart.
+BubbleChart is a JavaScript module for comparative visualization of two dimensional data in a bubble chart.
 
 **Why write it in Coffeescript?**
 
