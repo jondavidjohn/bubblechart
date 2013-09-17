@@ -26,29 +26,31 @@ class @BubbleChart
     @pointer = new BubbleChart.Pointer()
 
     do (c = @canvas) =>
+      c.context = c.getContext '2d'
+
+      # Adjust for retina if needed
+      ratio = 1
+      if window.devicePixelRatio? and window.devicePixelRatio > 1
+        if c.context.webkitBackingStorePixelRatio < 2
+          ratio = window.devicePixelRatio
+
+      if ratio > 1
+        c.style.height = "#{c.height}px"
+        c.style.width = "#{c.width}px"
+        c.width = c.width * ratio
+        c.height = c.height * ratio
+
       # Attach Canvas Mouse/Touch events
       c.style.position = "relative"
       c.onmousemove = c.ontouchmove = @pointer.e_move
       c.onmousedown = c.ontouchstart = @pointer.e_grab
       c.onmouseup = c.onmouseout = c.ontouchend = @pointer.e_release
       c.style.webkitUserSelect = "none"
+
       # Calculate Canvas Metrics
       c.area = c.height * c.width
       c.usableArea = c.area * (o.usedArea || 0.2)
       c.midpoint = new BubbleChart.Point(c.width / 2, c.height / 2)
-      c.context = c.getContext '2d'
-      # Adjust for retina if needed
-      if window.devicePixelRatio?
-        ratio = if window.devicePixelRatio > 1 and c.context.webkitBackingStorePixelRatio < 2
-          window.devicePixelRatio
-        else
-          1
-        if ratio > 1
-          c.style.height = "#{c.height}px"
-          c.style.width = "#{c.width}px"
-          c.width = c.width * ratio
-          c.height = c.height * ratio
-          c.context.scale(ratio, ratio)
 
     if @data.length
       @reload()
