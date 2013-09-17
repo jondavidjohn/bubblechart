@@ -66,3 +66,10 @@ Pull Request requirements
   - Include a use case that clearly demonstrates said issue (or enhancement)
   - Clean commit history (squash where it makes sense)
   - Relevant Tests (either updated and/or new)
+
+# TODO
+
+A few things it currently lacks that I'd like to see improved
+
+  - Better touch support
+  - Responsive interactivity
