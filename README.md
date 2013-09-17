@@ -83,5 +83,5 @@ get the visual representation of your data.
 
 ## Development
 
-see [CONTRIBUTING.md](https://github.com/jondavidjohn/bubblechart/edit/develop/CONTRIBUTING.md)
+see [CONTRIBUTING.md](https://github.com/jondavidjohn/bubblechart/blob/develop/CONTRIBUTING.md)
 
