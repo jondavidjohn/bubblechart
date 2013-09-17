@@ -11,20 +11,15 @@ class BubbleChart.Pointer
       stop = null
       (e) ->
         clearTimeout stop
-
-        # Normalize mouse position
-        e.offsetX ?= e.layerX
-        e.offsetY ?= e.layerY
-
-        self.current = new BubbleChart.Point(e.offsetX, e.offsetY)
+        self.current = self.getPosition(e)
         self.moving = true
-        if self.bubble? and self.bubble.grabbed
+        if self.grabbingBubble()
           e.preventDefault()
           self.dragging = true
         stop = setTimeout (=> self.moving = false), 50
 
     @e_grab = (e) ->
-      if self.bubble? and self.current?
+      if self.bubble?
         e.preventDefault()
         self.bubble.grabbed = true
         self.diff = self.current.diff self.bubble.position
@@ -43,9 +38,12 @@ class BubbleChart.Pointer
   grabbingBubble: ->
     @bubble? and @bubble.grabbed
 
-  getPixelRatio: (el) ->
-      if window.devicePixelRatio?
-        ratio = if window.devicePixelRatio > 1 and c.context.webkitBackingStorePixelRatio < 2
-          window.devicePixelRatio
-        else
-          1
+  getPosition: (e) ->
+    canvas = e.target or e.srcElement
+    if e.touches && e.touches.length > 0
+      x = e.touches[0].pageX - canvas.offsetLeft
+      y = e.touches[0].pageY - canvas.offsetTop
+    else
+      x = e.pageX - canvas.offsetLeft
+      y = e.pageY - canvas.offsetTop
+    new BubbleChart.Point(x, y)

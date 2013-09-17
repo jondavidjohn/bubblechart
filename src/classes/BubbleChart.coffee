@@ -31,6 +31,7 @@ class @BubbleChart
       c.onmousemove = c.ontouchmove = @pointer.e_move
       c.onmousedown = c.ontouchstart = @pointer.e_grab
       c.onmouseup = c.onmouseout = c.ontouchend = @pointer.e_release
+      c.style.webkitUserSelect = "none"
       # Calculate Canvas Metrics
       c.area = c.height * c.width
       c.usableArea = c.area * (o.usedArea || 0.2)
