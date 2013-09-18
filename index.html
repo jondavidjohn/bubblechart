@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Bubblechart by jondavidjohn</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Bubblechart</h1>
+          <h2>BubbleChart is a JavaScript module for comparative visualization of two dimensional data in a bubble chart.</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/jondavidjohn/bubblechart/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/jondavidjohn/bubblechart/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/jondavidjohn/bubblechart" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a name="bubblechart" class="anchor" href="#bubblechart"><span class="octicon octicon-link"></span></a>BubbleChart</h1>
+
+<p><a href="https://travis-ci.org/jondavidjohn/bubblechart"><img src="https://travis-ci.org/jondavidjohn/bubblechart.png?branch=master,develop" alt="Build Status (master,develop)"></a></p>
+
+<p>BubbleChart is a JavaScript module for comparative visualization of two dimensional data in a bubble chart.</p>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>To Create a new chart you simple create a new <code>BubbleChart</code> Object passing it
+your configuration options, then to create the chart, just call <code>.paint()</code></p>
+
+<div class="highlight highlight-js"><pre><span class="nx">chart</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BubbleChart</span><span class="p">({</span>
+  <span class="s2">"canvasId"</span><span class="o">:</span> <span class="s2">"bubblechart"</span><span class="p">,</span>
+  <span class="s2">"metric"</span><span class="o">:</span> <span class="s2">"Kb"</span><span class="p">,</span>
+  <span class="s2">"usedArea"</span><span class="o">:</span> <span class="mf">0.35</span><span class="p">,</span>
+  <span class="s2">"contain"</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="s2">"popoverOpts"</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">"textFont"</span><span class="o">:</span> <span class="s2">"Open Sans"</span><span class="p">,</span>
+  <span class="p">},</span>
+  <span class="s2">"data"</span> <span class="o">:</span> <span class="nx">myCustomData</span><span class="p">()</span>
+<span class="p">});</span>
+<span class="nx">chart</span><span class="p">.</span><span class="nx">paint</span><span class="p">();</span>
+</pre></div>
+
+<h3>
+<a name="options" class="anchor" href="#options"><span class="octicon octicon-link"></span></a>Options</h3>
+
+<p>This is the exploded view of possbile options (with included defaults)</p>
+
+<div class="highlight highlight-js"><pre>  <span class="p">{</span>
+    <span class="nx">canvasId</span><span class="o">:</span> <span class="s2">""</span><span class="p">,</span>    <span class="c1">// id of target &lt;canvas&gt;</span>
+    <span class="nx">usedArea</span><span class="o">:</span> <span class="mf">0.5</span><span class="p">,</span>   <span class="c1">// how much of the canvas you wish to use for bubbles</span>
+    <span class="nx">data</span><span class="o">:</span> <span class="p">[],</span>        <span class="c1">// Array of data objects (converted into bubbles)</span>
+    <span class="nx">metric</span><span class="o">:</span> <span class="s2">""</span><span class="p">,</span>      <span class="c1">// String label for your data metric (shown in popover)</span>
+    <span class="nx">colors</span><span class="o">:</span> <span class="p">[],</span>      <span class="c1">// Array of colors to randomly choose from if data</span>
+                     <span class="c1">// object lacks fillColor</span>
+
+    <span class="nx">contain</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>       <span class="c1">// keep bubbles within the canvas</span>
+    <span class="nx">gutter</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>            <span class="c1">// if contain, allow bubbles to overlap the canvas border this much</span>
+    <span class="nx">fps</span><span class="o">:</span> <span class="mi">60</span><span class="p">,</span>              <span class="c1">// The draw rate/speed</span>
+    <span class="nx">borderColor</span><span class="o">:</span> <span class="s2">""</span><span class="p">,</span>      <span class="c1">// Global Bubble border color</span>
+    <span class="nx">borderSize</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>        <span class="c1">// Global Bubble border size</span>
+    <span class="nx">textColor</span><span class="o">:</span> <span class="s2">"#fff"</span>     <span class="c1">// Bubble label color</span>
+    <span class="nx">textType</span><span class="o">:</span> <span class="s2">"helvetica"</span> <span class="c1">// Font</span>
+
+    <span class="nx">popoverOpts</span><span class="o">:</span> <span class="p">{</span>        <span class="c1">// Options that control the look and feel of the hover popover</span>
+      <span class="nx">textFont</span><span class="o">:</span> <span class="s1">'helvetica'</span><span class="p">,</span>
+      <span class="nx">textColor</span><span class="o">:</span> <span class="s1">'#fff'</span><span class="p">,</span>
+      <span class="nx">fillColor</span><span class="o">:</span> <span class="s1">'#333'</span><span class="p">,</span>
+      <span class="nx">opacity</span><span class="o">:</span> <span class="mf">0.6</span><span class="p">,</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="data-objects" class="anchor" href="#data-objects"><span class="octicon octicon-link"></span></a>Data Objects</h3>
+
+<p>Data objects are what create the bubbles.  Any of these objects will cascade
+options set globally in the main BubbleChart Object.</p>
+
+<p>Each data object's <code>data</code> property will determine the size of the bubble in
+relation to the rest of the data object's <code>data</code> properties.  This is how you
+get the visual representation of your data.</p>
+
+<div class="highlight highlight-js"><pre>  <span class="p">{</span>
+    <span class="nx">label</span><span class="o">:</span> <span class="s2">"Name of the thing"</span><span class="p">,</span>
+    <span class="nx">data</span><span class="o">:</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="nx">metric</span><span class="o">:</span> <span class="s2">"this specific metric"</span><span class="p">,</span>
+    <span class="nx">borderColor</span><span class="o">:</span> <span class="s2">"#FFF"</span><span class="p">,</span>
+    <span class="nx">borderSize</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span>
+  <span class="p">}</span>
+</pre></div>
+
+<h2>
+<a name="requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<ul>
+<li>IE9+ (required <code>&lt;canvas&gt;</code> support)</li>
+<li><strong>No reliance on any external JavaScript Library</strong></li>
+</ul><h2>
+<a name="development" class="anchor" href="#development"><span class="octicon octicon-link"></span></a>Development</h2>
+
+<p>see <a href="https://github.com/jondavidjohn/bubblechart/blob/develop/CONTRIBUTING.md">CONTRIBUTING.md</a></p>
+        </section>
+
+        <footer>
+          Bubblechart is maintained by <a href="https://github.com/jondavidjohn">jondavidjohn</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
