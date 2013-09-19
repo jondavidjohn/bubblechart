@@ -1,4 +1,2 @@
 RewriteEngine on
-RewriteRule ^bubblechart/(.*) /_site/$1
-RewriteCond %{THE_REQUEST} ^GET\ /_site/
-RewriteRule ^_site/(.*) /bubblechart/$1 [L,R=301]
+RewriteRule ^bubblechart/?(.*) /_site/$1
