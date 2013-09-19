@@ -1,3 +1,2 @@
 baseurl: /bubblechart
-destination: ./bubblechart
 source: ./_source
