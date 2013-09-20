@@ -3,8 +3,8 @@
   "description": "BubbleChart is a JavaScript module for the comparative visualization of two dimensional data in a Bubble Chart.",
   "version": "0.0.0-dev",
   "license": "Apache 2.0",
-  "homepage": "http://https://github.com/jondavidjohn/bubblechart",
-  "bugs": "http://https://github.com/jondavidjohn/bubblechart/issues",
+  "homepage": "https://github.com/jondavidjohn/bubblechart",
+  "bugs": "https://github.com/jondavidjohn/bubblechart/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/jondavidjohn/bubblechart.git"
