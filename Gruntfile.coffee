@@ -41,6 +41,36 @@ module.exports = (grunt) ->
         files:
           'dist/bubblechart.min.js': ['<%= concat.dist.dest %>']
 
+    compress:
+      main:
+        options:
+          mode: 'gzip'
+        expand: true
+        cwd: 'dist'
+        src: ['*.js']
+        dest: 'dist/'
+
+      dist:
+        options:
+          archive: 'dist/bubblechart-<%= pkg.version %>.zip'
+          level: 9
+        files: [
+          {
+            src: [
+              'LICENSE.txt',
+              'README.md',
+            ]
+          }
+          {
+            expand: true
+            cwd: 'dist/'
+            src: [
+              '*.js',
+              '*.js.gz'
+            ]
+          }
+        ]
+
     qunit:
       files: [
         'test/Patches.html',
@@ -56,10 +86,11 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-concat'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
+  grunt.loadNpmTasks 'grunt-contrib-compress'
   grunt.loadNpmTasks 'grunt-contrib-qunit'
   grunt.loadNpmTasks 'grunt-contrib-watch'
 
   # Define Custom Tasks
   grunt.registerTask 'test', ['qunit']
   grunt.registerTask 'default', ['clean', 'coffee:compile', 'concat:dist', 'test']
-  grunt.registerTask 'dist', ['default', 'uglify:dist']
+  grunt.registerTask 'dist', ['default', 'uglify:dist', 'compress', 'compress:dist']

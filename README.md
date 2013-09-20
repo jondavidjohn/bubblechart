@@ -33,12 +33,13 @@ This is the exploded view of possbile options (with included defaults)
 
 ```js
 {
-  canvasId: "",    // id of target <canvas>
-  usedArea: 0.5,   // how much of the canvas you wish to use for bubbles
-  data: [],        // Array of data objects (converted into bubbles)
-  metric: "",      // Label for your data metric (shown in popover)
-  colors: [],      // Array of colors to randomly choose from if data
-                   // object lacks fillColor
+  canvasId: "",      // id of target <canvas>
+  usedArea: 0.5,     // how much of the canvas you wish to use for bubbles
+  data: [],          // Array of data objects (converted into bubbles)
+  metric: "",        // Label for your data metric (shown in popover)
+  attribution: true, // controls "(Powered by BubbleChart)"
+  fillColors: [],    // Array of colors to randomly choose from if data
+                     // object lacks fillColor
 
   contain: false,       // keep bubbles within the canvas
   gutter: 0,            // containment gutter

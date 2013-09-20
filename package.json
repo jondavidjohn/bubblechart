@@ -16,6 +16,7 @@
     "grunt-contrib-clean": "latest",
     "grunt-contrib-coffee": "latest",
     "grunt-contrib-uglify": "latest",
+    "grunt-contrib-compress": "latest",
     "grunt-contrib-qunit": "latest",
     "grunt-contrib-watch": "latest",
     "grunt-contrib-concat": "latest"

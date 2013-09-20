@@ -2,7 +2,7 @@ class @BubbleChart
 
   constructor: (o) ->
     @o = o
-    @data = o.data
+    @data = o.data or []
     @metric = o.metric
     @fillColors = o.fillColors or []
     @fps = o.fps or 60
@@ -21,6 +21,12 @@ class @BubbleChart
         @canvas.parentNode.insertBefore(a, @canvas)
       if o.attribution is 'after'
         @canvas.parentNode.insertBefore(a, @canvas.nextSibling)
+
+    comment = document.createComment(' BubbleChart by jondavidjohn (http://jondavidjohn.github.io/bubblechart/) ');
+    if @canvas.firstChild?
+      @canvas.insertBefore(comment, @canvas.firstChild);
+    else
+      @canvas.appendChild comment
 
     # Pointer Setup
     @pointer = new BubbleChart.Pointer()
