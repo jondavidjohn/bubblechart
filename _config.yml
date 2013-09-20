@@ -1,1 +1,3 @@
 baseurl: /bubblechart
+pygments: true
+exclude: ["Gemfile", "Gemfile.lock", "params.json"]

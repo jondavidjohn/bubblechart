@@ -1,0 +1,107 @@
+---
+layout: master
+title: How to use
+---
+<h2>
+	<a name="usage" class="anchor" href="#usage">
+		<span class="octicon octicon-link"></span>
+	</a>
+	Usage
+</h2>
+
+<p>To Create a new chart you simple create a new <code>BubbleChart</code> Object passing it
+your configuration options, then to create the chart, just call <code>.paint()</code></p>
+
+{% highlight javascript %}
+var chart = new BubbleChart({
+  canvasId: "bubblechart",
+  metric: "Kb",
+  usedArea: 0.35,
+  contain: true,
+  popoverOpts: {
+    textFont: "Open Sans",
+  },
+  data : myCustomData()
+});
+chart.paint();
+{% endhighlight %}
+
+<h3>
+	<a name="options" class="anchor" href="#options">
+		<span class="octicon octicon-link"></span>
+	</a>
+	Options
+</h3>
+
+<p>This is the exploded view of possbile options (with included defaults)</p>
+
+{% highlight javascript %}
+{
+  canvasId: "",    // id of target <canvas>
+  usedArea: 0.5,   // how much of the canvas you wish to use for bubbles
+  data: [],        // Array of data objects (converted into bubbles)
+  metric: "",      // Label for your data metric (shown in popover)
+  colors: [],      // Array of colors to randomly choose from if data
+                   // object lacks fillColor
+
+  contain: false,       // keep bubbles within the canvas
+  gutter: 0,            // containment gutter
+  fps: 60,              // The draw rate/speed
+  borderColor: "",      // Global Bubble border color
+  borderSize: 0,        // Global Bubble border size
+  textColor: "#fff"     // Bubble label color
+  textType: "helvetica" // Font
+
+  popoverOpts: {        // Control the look of the hover popover
+    textFont: 'helvetica',
+    textColor: '#fff',
+    fillColor: '#333',
+    opacity: 0.6,
+  }
+}
+{% endhighlight %}
+
+<h3>
+	<a name="data-objects" class="anchor" href="#data-objects">
+		<span class="octicon octicon-link"></span>
+	</a>
+	Data Objects
+</h3>
+
+<p>Data objects are what create the bubbles.  Any of these objects will cascade
+options set globally in the main BubbleChart Object.</p>
+
+<p>Each data object's <code>data</code> property will determine the size of the bubble in
+relation to the rest of the data object's <code>data</code> properties.  This is how you
+get the visual representation of your data.</p>
+
+{% highlight javascript %}
+{
+  label: "Name of the thing",
+  data: 10,
+  metric: "this specific metric",
+  borderColor: "#FFF",
+  borderSize: 3,
+}
+{% endhighlight %}
+
+<h2>
+	<a name="requirements" class="anchor" href="#requirements">
+		<span class="octicon octicon-link"></span>
+	</a>
+	Requirements
+</h2>
+
+<ul>
+	<li>IE9+ (required <code>&lt;canvas&gt;</code> support)</li>
+	<li><strong>No reliance on any external JavaScript Library</strong></li>
+</ul>
+
+<h2>
+	<a name="development" class="anchor" href="#development">
+		<span class="octicon octicon-link"></span>
+	</a>
+	Development
+</h2>
+
+<p>see <a href="https://github.com/jondavidjohn/bubblechart/blob/develop/CONTRIBUTING.md">CONTRIBUTING.md</a></p>

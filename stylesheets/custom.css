@@ -1,0 +1,13 @@
+nav li {
+	list-style:none;
+	display:inline-block;
+	font-weight:bold;
+	font-size:32px;
+	font-size: 24px;
+	margin: 5px 16px;
+	padding:0px;
+}
+nav li.active {
+	border-bottom:2px #555 dotted;
+	border-top:2px #555 dotted;
+}
