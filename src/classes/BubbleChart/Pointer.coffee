@@ -44,14 +44,22 @@ class BubbleChart.Pointer
         ratio = window.devicePixelRatio
     ratio
 
-  getPosition: (e) ->
-    canvas = e.target or e.srcElement
-    boundingRect = canvas.getBoundingClientRect()
-    pr = @getPixelRatio(canvas)
-    if e.touches && e.touches.length > 0
-      x = e.touches[0].pageX - boundingRect.left
-      y = e.touches[0].pageY - boundingRect.top
-    else
-      x = e.pageX - boundingRect.left
-      y = e.pageY - boundingRect.top
-    new BubbleChart.Point(x * pr, y * pr)
+  getPosition: do ->
+    top = null
+    left = null
+    (e) ->
+      element = e.target or e.srcElement
+      pr = @getPixelRatio(element)
+      unless top? and left?
+        while true
+          top += element.offsetTop or 0
+          left += element.offsetLeft or 0
+          element = element.offsetParent
+          break unless element
+      if e.touches && e.touches.length > 0
+        x = e.touches[0].pageX - left
+        y = e.touches[0].pageY - top
+      else
+        x = e.pageX - left
+        y = e.pageY - top
+      new BubbleChart.Point(x * pr, y * pr)
