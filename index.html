@@ -4,17 +4,20 @@ title: Examples
 ---
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="{{ site.baseurl }}/javascripts/bubblechart.min.js"></script>
-<script src="{{ site.baseurl }}/javascripts/bcexamples.js"></script>
+<script src="{{ site.baseurl }}/javascripts/RequestManager.js"></script>
 
 <div id="congress-example" class="example">
 	<h2>
 		<a name="congress" class="anchor" href="#congress">
-			<span class="octicon octicon-link"></span>
+			Congressional Slackers
 		</a>
-		Congressional inaction
 	</h2>
-	<p>Congress stuff</p>
+	<p>Members of the US Congress that have registered more than 15% "Non-votes" during the 2013 legislative year thus far.</p>
+	<p>A "Non-vote" is either a vote of "Present" or "Not voted".</p>
+	<p><small>Data via <a href="http://sunlightlabs.github.io/congress/">Sunlight Labs Congress API</a></small></p>
 	<canvas id="congress-canvas" height="600px" width="620px"></canvas>
+	<script src="{{ site.baseurl }}/javascripts/legislators.js"></script>
+	<script> var congress_key = '31fceb19c8324479963e85d3459a6ef2'; </script>
 	<script src="{{ site.baseurl }}/javascripts/congress.js"></script>
 </div>
 
@@ -22,24 +25,12 @@ title: Examples
 <div id="gh-lang-example" class="example">
 	<h2>
 		<a name="gh-lang" class="anchor" href="#gh-lang">
-			<span class="octicon octicon-link"></span>
+			Github language usage statistics
 		</a>
-		Github language usage statistics
 	</h2>
 	<p>Visualize your github language usage based on your public (non-forked) repositories</p>
+	<input placeholder="Github Username" type="text" name="gh-lang-username" id="gh-lang-username"/> <button class="mybutton green" id="gh-lang-username-btn">Go!</button>
 	<canvas id="gh-lang-canvas" height="600px" width="620px"></canvas>
+	<script> var gh_key = 'dcfbecfd0d0d2a6d28b82d96dca49da93aec6e3e'; </script>
 	<script src="{{ site.baseurl }}/javascripts/gh-lang.js"></script>
-</div>
-
-
-<div id="sports-example" class="example">
-	<h2>
-		<a name="sports" class="anchor" href="#sports">
-			<span class="octicon octicon-link"></span>
-		</a>
-		Sports Stats
-	</h2>
-	<p>Sports stuff</p>
-	<canvas id="sports-canvas" height="600px" width="620px"></canvas>
-	<script src="{{ site.baseurl }}/javascripts/sports.js"></script>
 </div>

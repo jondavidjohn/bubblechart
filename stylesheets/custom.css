@@ -11,3 +11,101 @@ nav li.active {
 	border-bottom:2px #555 dotted;
 	border-top:2px #555 dotted;
 }
+#gh-lang-username, #gh-lang-username-btn {
+	padding: 5px;
+	font-family: "Raleway","Helvetica Neue",Helvetica,Arial,sans-serif;;
+	font-size: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: none;
+}
+#gh-lang-username-btn {
+	width: auto;
+	padding: 8px;
+}
+.mybutton.green.disabled {
+	top: 2px;
+	background-color: #ccc;
+	-webkit-box-shadow: 0 2px 0 0 #888;
+	-moz-box-shadow: 0 2px 0 0 #888;
+	box-shadow: 0 2px 0 0 #888;
+	top: -5px;
+}
+.mybutton.green:active {
+	-webkit-box-shadow: 0 2px 0 0 #51a65f;
+	-moz-box-shadow: 0 2px 0 0 #51a65f;
+	box-shadow: 0 2px 0 0 #51a65f;
+	top: -5px;
+}
+.mybutton.green.disabled:hover {
+	background-color: #ccc;
+}
+.mybutton.green:hover {
+	background: #72d27c;
+}
+.mybutton.green {
+	top: -7px;
+	background-color: #69c773;
+	-webkit-box-shadow: 0 4px 0 0 #51a65f;
+	-moz-box-shadow: 0 4px 0 0 #51a65f;
+	box-shadow: 0 4px 0 0 #51a65f;
+	font-size: 20px !important;
+	padding: 20px;
+	width: 270px;
+}
+.mybutton {
+	font-size:32px;
+	background-color: #3f8abf;
+	-webkit-box-shadow: 0 4px 0 0 #2c6085;
+	-moz-box-shadow: 0 4px 0 0 #2c6085;
+	box-shadow: 0 4px 0 0 #2c6085;
+	border: none;
+	padding: 16px 30px;
+	text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+	z-index: 1;
+}
+.mybutton {
+	width: auto;
+	background: #2ba6cb;
+	border: 1px solid #1e728c;
+	-webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.5) inset;
+	-moz-box-shadow: 0 1px 0 rgba(255,255,255,0.5) inset;
+	box-shadow: 0 1px 0 rgba(255,255,255,0.5) inset;
+	color: #fff;
+	cursor: pointer;
+	display: inline-block;
+	font-family: inherit;
+	font-weight: bold;
+	line-height: 1;
+	margin: 0;
+	padding: 10px 20px 11px;
+	position: relative;
+	text-align: center;
+	text-decoration: none;
+	-webkit-transition: background-color 0.15s ease-in-out;
+	-moz-transition: background-color 0.15s ease-in-out;
+	-o-transition: background-color 0.15s ease-in-out;
+	transition: background-color 0.15s ease-in-out;
+}
+.mybutton {
+	font-weight: bold;
+	padding: 14px 20px;
+	background: #3f8abf;
+	color: #fff !important;
+	line-height: 1 !important;
+	font-family: "Raleway","Helvetica Neue",Helvetica,Arial,sans-serif;
+	white-space: nowrap;
+	border: none;
+	cursor: pointer;
+	display: -moz-inline-stack;
+	display: inline-block;
+	vertical-align: middle;
+	zoom: 1;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-ms-border-radius: 3px;
+	-o-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-font-smoothing: antialiased;
+}
