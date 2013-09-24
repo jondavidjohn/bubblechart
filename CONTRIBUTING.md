@@ -30,6 +30,7 @@ Then to build a distribution run this grunt task
     grunt dist
 
 This will generate the compiled (and minified) sourc in your `dist/` directory
+along with a distributable zip archive.
 
 Any time you change any of the `src/**/*.coffee` files you'll
 need to re-run this command.
@@ -38,7 +39,7 @@ You can also use
 
     grunt watch
 
-to automatically recompile (and test) everytime you
+to automatically recompile and concat the unminified file everytime you
 change any of the `src/**/*.coffee` files.
 
 ## Testing
@@ -73,3 +74,4 @@ A few things it currently lacks that I'd like to see improved
 
   - Better touch support
   - Responsive interactivity
+  - Better handling of a large number of "bubbles"

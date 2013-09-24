@@ -4,10 +4,6 @@
 
 BubbleChart is a JavaScript module for comparative visualization of two dimensional data in a bubble chart.
 
-**Why write it in Coffeescript?**
-
-I've never worked with CoffeeScript, decided to give it a spin.
-
 ## Usage
 
 To Create a new chart you simple create a new `BubbleChart` Object passing it
