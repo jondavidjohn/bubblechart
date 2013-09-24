@@ -10,12 +10,12 @@
 			}
 		}),
 		rm = new RequestManager(),
-		jsonp_cb = null,
+		processVotes = null,
 		nonvote_data = {},
 		totalvote_data = {},
 		chart_data = [];
 
-	function construct_url(endpoint, params) {
+	function _url(endpoint, params) {
 		var base_url = 'http://congress.api.sunlightfoundation.com/',
 			apikey = congress_key,
 			params_qs = [];
@@ -32,8 +32,9 @@
 		return base_url + endpoint + '?' + params_qs.join('&');
 	}
 
-	function format_chart_data(bioguide_id, stat) {
+	function formatChartData(bioguide_id, stat) {
 		var leg;
+		// Make sure we're dealing with someone still in office
 		if (legislators.hasOwnProperty(bioguide_id) && legislators[bioguide_id].in_office === "1") {
 			leg = legislators[bioguide_id];
 			return {
@@ -45,10 +46,12 @@
 		}
 	}
 
-	jsonp_cb = function(res) {
+	processVotes = function(res) {
 		var i, id, len, stat;
 
+		// For each vote
 		for (i = 0, len = res.results.length; i < len; i++) {
+			// Loop through all voters
 			for (id in res.results[i].voter_ids) {
 				if (res.results[i].voter_ids.hasOwnProperty(id)) {
 					if (["Not Voting", "Present"].indexOf(res.results[i].voter_ids[id]) !== -1) {
@@ -75,7 +78,7 @@
 				if (nonvote_data.hasOwnProperty(id)) {
 					stat = Math.round((nonvote_data[id] / totalvote_data[id]) * 100);
 					if (stat > 15) {
-						chart_data.push(format_chart_data(id, stat));
+						chart_data.push(formatChartData(id, stat));
 					}
 				}
 			}
@@ -90,7 +93,7 @@
 
 	// Initial request to get pagination info
 	rm.execJSONP(
-		construct_url('votes', {
+		_url('votes', {
 			year: 2013,
 			fields: 'voter_ids,roll_id',
 			per_page: 50,
@@ -101,22 +104,19 @@
 
 			for (var i = 2; i <= pages; i++) {
 				rm.execJSONP(
-					construct_url('votes', {
+					_url('votes', {
 						year: 2013,
 						fields: 'voter_ids,roll_id',
 						per_page: 50,
 						page: i
 					}),
-					jsonp_cb
+					processVotes
 				);
 			}
 
-			jsonp_cb(res); // Process page 1
+			processVotes(res); // Process page 1
 		}
 	);
-
-	function getLegislator(bioguide_id) {
-	}
 
 	function getPartyColor(party) {
 		switch(party) {

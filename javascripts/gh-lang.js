@@ -13,7 +13,7 @@
 		rm = new RequestManager(),
 		timer;
 
-	function construct_url(endpoint, params) {
+	function _url(endpoint, params) {
 		var base_url = 'https://api.github.com/',
 			access_token = gh_key,
 			params_qs = [];
@@ -43,7 +43,7 @@
 		button.className = button.className += ' disabled';
 
 		rm.execJSONP(
-			construct_url('users/'+username+'/repos'),
+			_url('users/'+username+'/repos'),
 			function(response) {
 				if (response.meta.status !== 200) {
 					alert(response.data.message);
@@ -56,7 +56,7 @@
 					(function(repo) {
 						var lang_cb;
 
-						lang_cb = function self(lang_response) {
+						lang_cb = function(lang_response) {
 							for (var lang in lang_response.data) {
 								(function(lang, bytes) {
 									if (!lang_data.hasOwnProperty(lang)) {
@@ -67,7 +67,7 @@
 							}
 						};
 						lang_cb.repo = repo.name;
-						rm.execJSONP(construct_url(repo.languages_url), lang_cb);
+						rm.execJSONP(_url(repo.languages_url), lang_cb);
 					})(response.data[i]);
 				}
 			}
