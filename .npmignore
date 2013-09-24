@@ -1,0 +1,11 @@
+!dist
+Gruntfile.coffee
+.npmignore
+.gitmodules
+.travis.yml
+.gitignore
+.git
+lib
+src
+test
+index.html
