@@ -45,21 +45,24 @@ class BubbleChart.Pointer
     ratio
 
   getPosition: do ->
-    top = null
-    left = null
+    top = {}
+    left = {}
     (e) ->
       element = e.target or e.srcElement
+      element_id = element.id
       pr = @getPixelRatio(element)
-      unless top? and left?
+      unless top[element_id]? and left[element_id]?
+        top[element_id] = 0
+        left[element_id] = 0
         while true
-          top += element.offsetTop or 0
-          left += element.offsetLeft or 0
+          top[element_id] += element.offsetTop or 0
+          left[element_id] += element.offsetLeft or 0
           element = element.offsetParent
           break unless element
       if e.touches && e.touches.length > 0
-        x = e.touches[0].pageX - left
-        y = e.touches[0].pageY - top
+        x = e.touches[0].pageX - left[element_id]
+        y = e.touches[0].pageY - top[element_id]
       else
-        x = e.pageX - left
-        y = e.pageY - top
+        x = e.pageX - left[element_id]
+        y = e.pageY - top[element_id]
       new BubbleChart.Point(x * pr, y * pr)

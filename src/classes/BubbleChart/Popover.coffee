@@ -16,7 +16,7 @@ class BubbleChart.Popover
 
     context.font = "17px '#{@textFont}'"
     label_measurement = context.measureText @bubble.label
-    metric_measurement = context.measureText @bubble.metric
+    metric_measurement = context.measureText "#{@bubble.data} #{@bubble.metric}"
     lineWidth = if label_measurement.width > metric_measurement.width
         label_measurement.width + 15
       else

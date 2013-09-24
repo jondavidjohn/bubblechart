@@ -38,43 +38,66 @@
 
 	test('getPosition', function() {
 		var pointer = new Pointer(),
-			canvas = document.getElementById('test_canvas');
-		canvas.context = canvas.getContext('2d');
-		canvas.context.webkitBackingStorePixelRatio = 1;
+			element = document.getElementById('test_canvas'),
+			canvas_top = 0,
+			canvas_left = 0,
+			mockEvent = null;
+
 		window.devicePixelRatio = 1;
 
-		canvas.getBoundingClientRect = function() {
-			return { left: 10, top: 20 };
-		};
+		function getMouseEvent() {
+			var canvas = document.getElementById('test_canvas');
 
-		// Mock Event Object
-		mockEvent = {
-			target: canvas,
-			pageX: 50,
-			pageY: 20
-		};
+			canvas.context = canvas.getContext('2d');
+			canvas.context.webkitBackingStorePixelRatio = 1;
 
-		boundingRect = canvas.getBoundingClientRect();
+			return {
+				target: canvas,
+				pageX: 50,
+				pageY: 20
+			};
+		}
 
+		function getTouchEvent() {
+			var canvas = document.getElementById('test_canvas');
+
+			canvas.context = canvas.getContext('2d');
+			canvas.context.webkitBackingStorePixelRatio = 1;
+
+			return {
+				target: canvas,
+				touches: [{pageX: 30, pageY: 10}]
+			};
+		}
+
+		// Calculate proper offset
+		do {
+			canvas_top += element.offsetTop || 0;
+			canvas_left += element.offsetLeft || 0;
+		} while (element = element.offsetParent)
+
+		mockEvent = getMouseEvent();
 		equal(
 			pointer.getPosition(mockEvent).x,
-			mockEvent.pageX - boundingRect.left
+			mockEvent.pageX - canvas_left
 		);
+
+		mockEvent = getMouseEvent();
 		equal(
 			pointer.getPosition(mockEvent).y,
-			mockEvent.pageY - boundingRect.top
+			mockEvent.pageY - canvas_top
 		);
 
-		// Set up for touch detection
-		mockEvent.touches = [{pageX: 30, pageY: 10}];
-
+		mockEvent = getTouchEvent();
 		equal(
 			pointer.getPosition(mockEvent).x,
-			mockEvent.touches[0].pageX - boundingRect.left
+			mockEvent.touches[0].pageX - canvas_left
 		);
+
+		mockEvent = getTouchEvent();
 		equal(
 			pointer.getPosition(mockEvent).y,
-			mockEvent.touches[0].pageY - boundingRect.top
+			mockEvent.touches[0].pageY - canvas_top
 		);
 	});
 })(BubbleChart.Pointer);
