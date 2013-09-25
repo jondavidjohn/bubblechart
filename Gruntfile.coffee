@@ -59,6 +59,7 @@ module.exports = (grunt) ->
             src: [
               'LICENSE.txt',
               'README.md',
+              'CHANGELOG'
             ]
           }
           {
