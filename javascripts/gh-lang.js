@@ -54,20 +54,19 @@
 					if (response.data[i].fork) continue;
 
 					(function(repo) {
-						var lang_cb;
-
-						lang_cb = function(lang_response) {
-							for (var lang in lang_response.data) {
-								(function(lang, bytes) {
-									if (!lang_data.hasOwnProperty(lang)) {
-										lang_data[lang] = 0;
-									}
-									lang_data[lang] += bytes;
-								})(lang, lang_response.data[lang]);
+						rm.execJSONP(
+							_url(repo.languages_url),
+							function(lang_response) {
+								for (var lang in lang_response.data) {
+									(function(lang, bytes) {
+										if (!lang_data.hasOwnProperty(lang)) {
+											lang_data[lang] = 0;
+										}
+										lang_data[lang] += bytes;
+									})(lang, lang_response.data[lang]);
+								}
 							}
-						};
-						lang_cb.repo = repo.name;
-						rm.execJSONP(_url(repo.languages_url), lang_cb);
+						);
 					})(response.data[i]);
 				}
 			}
