@@ -26,7 +26,7 @@ class BubbleChart.Pointer
         self.current = null
 
     @e_release = (e) ->
-      if self.bubble?
+      if self.grabbingBubble()
         e.preventDefault()
         self.bubble.grabbed = false
         self.diff = null
