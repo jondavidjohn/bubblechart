@@ -92,31 +92,33 @@
 	};
 
 	// Initial request to get pagination info
-	rm.execJSONP(
-		_url('votes', {
-			year: 2013,
-			fields: 'voter_ids,roll_id',
-			per_page: 50,
-			page: 1
-		}),
-		function(res) {
-			var pages = Math.floor(res.count / 50) + 1;
+	window.onload = function() {
+		rm.execJSONP(
+			_url('votes', {
+				year: 2013,
+				fields: 'voter_ids,roll_id',
+				per_page: 50,
+				page: 1
+			}),
+			function(res) {
+				var pages = Math.floor(res.count / 50) + 1;
 
-			for (var i = 2; i <= pages; i++) {
-				rm.execJSONP(
-					_url('votes', {
-						year: 2013,
-						fields: 'voter_ids,roll_id',
-						per_page: 50,
-						page: i
-					}),
-					processVotes
-				);
+				for (var i = 2; i <= pages; i++) {
+					rm.execJSONP(
+						_url('votes', {
+							year: 2013,
+							fields: 'voter_ids,roll_id',
+							per_page: 50,
+							page: i
+						}),
+						processVotes
+					);
+				}
+
+				processVotes(res); // Process page 1
 			}
-
-			processVotes(res); // Process page 1
-		}
-	);
+		);
+	};
 
 	function getPartyColor(party) {
 		switch(party) {
