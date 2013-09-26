@@ -106,7 +106,11 @@ class @BubbleChart
 
     for b in @bubbles
       if b.last_draw?
-        @canvas.context.clearRect b.last_draw.x, b.last_draw.y, b.last_draw.w, b.last_draw.h
+        b.clear @canvas.context
+
+    for b in @bubbles
+      if b.popover.last_draw?
+        b.popover.clear @canvas.context
 
     for b in @bubbles
       b.paint @canvas.context

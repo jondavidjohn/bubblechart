@@ -137,3 +137,8 @@ class BubbleChart.Bubble
       h: @pre.height
 
     context.drawImage @pre, @last_draw.x, @last_draw.y, @last_draw.w, @last_draw.h
+
+  clear: (context) ->
+    if @last_draw?
+      context.clearRect @last_draw.x, @last_draw.y, @last_draw.w, @last_draw.h
+      @last_draw = null
