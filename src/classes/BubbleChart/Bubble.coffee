@@ -16,13 +16,14 @@ class BubbleChart.Bubble
     @radius = o.radius
     @position = o.position
     @diameter = @radius * 2
-    @reach = @radius
+    @reach = @radius + 1
     if @borderSize?
       @reach += @borderSize
 
     @popover = new BubbleChart.Popover(@, o.popoverOpts or {})
 
     @pre = document.createElement 'canvas'
+    @last_draw = null
     @rendered = false
 
   getVelocity: () ->
@@ -84,7 +85,7 @@ class BubbleChart.Bubble
 
   paint: (context) ->
     unless @rendered
-      @pre.height = @pre.width = ((@diameter) + 2) * window.devicePixelRatio
+      @pre.height = @pre.width = ((@diameter) + 3) * window.devicePixelRatio
       pre_context = @pre.getContext('2d');
       pre_context.beginPath()
       pre_context.fillStyle = @fillColor
@@ -128,4 +129,11 @@ class BubbleChart.Bubble
 
       pre_context.closePath()
       @rendered = true
-    context.drawImage @pre, @position.x - @radius, @position.y - @radius, @pre.width / window.devicePixelRatio, @pre.height / window.devicePixelRatio
+
+    @last_draw =
+      x: @position.x - @radius
+      y: @position.y - @radius
+      w: @pre.width
+      h: @pre.height
+
+    context.drawImage @pre, @last_draw.x, @last_draw.y, @last_draw.w, @last_draw.h

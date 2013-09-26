@@ -104,7 +104,9 @@ class @BubbleChart
         if @pointer.current? and @pointer.current.distance(b.position) <= b.radius
           @pointer.bubble = b
 
-    @canvas.context.clearRect 0, 0, @canvas.width, @canvas.height
+    for b in @bubbles
+      if b.last_draw?
+        @canvas.context.clearRect b.last_draw.x, b.last_draw.y, b.last_draw.w, b.last_draw.h
 
     for b in @bubbles
       b.paint @canvas.context

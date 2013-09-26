@@ -10,6 +10,7 @@ class BubbleChart.Popover
     @textFont = o.textFont or 'helvetica'
     @opacity = o.opacity or 0.6
     @lineHeight = 20
+    @last_draw = null
 
   paint: (pointer, context) ->
     return unless pointer.current?
