@@ -22,9 +22,9 @@ class @BubbleChart
       if o.attribution is 'after'
         @canvas.parentNode.insertBefore(a, @canvas.nextSibling)
 
-    comment = document.createComment(' BubbleChart by jondavidjohn (http://jondavidjohn.github.io/bubblechart/) ');
+    comment = document.createComment(' BubbleChart by jondavidjohn (http://jondavidjohn.github.io/bubblechart/) ')
     if @canvas.firstChild?
-      @canvas.insertBefore(comment, @canvas.firstChild);
+      @canvas.insertBefore(comment, @canvas.firstChild)
     else
       @canvas.appendChild comment
 
@@ -37,10 +37,10 @@ class @BubbleChart
       # Adjust for retina if needed
       ratio = 1
       if window.devicePixelRatio? and window.devicePixelRatio > 1
-        if c.context.webkitBackingStorePixelRatio < 2
-          ratio = window.devicePixelRatio
+        if c.context.webkitBackingStorePixelRatio == 2
+          window.devicePixelRatio = 1
 
-      if ratio > 1
+      if window.devicePixelRatio > 1
         c.style.height = "#{c.height}px"
         c.style.width = "#{c.width}px"
         c.width = c.width * ratio
@@ -88,7 +88,10 @@ class @BubbleChart
 
       @bubbles.push new BubbleChart.Bubble(opts)
 
-  paint: (_loop = true) ->
+  paint: (_animate = true) ->
+    document.body.style.cursor = "default" unless @pointer.grabbingBubble()
+    @pointer.bubble = null unless @pointer.grabbingBubble()
+
     for b in @bubbles
       b.advance @
       for bubble in @bubbles
@@ -97,21 +100,18 @@ class @BubbleChart
         if @contain
           bubble.pushAwayFromEdges(@canvas, @gutter)
 
-    @canvas.context.clearRect 0, 0, @canvas.width, @canvas.height
+      unless @pointer.grabbingBubble()
+        if @pointer.current? and @pointer.current.distance(b.position) <= b.radius
+          @pointer.bubble = b
 
-    if @pointer.bubble?
-      document.body.style.cursor = "default" unless @pointer.bubble.grabbed
-      @pointer.bubble = null unless @pointer.bubble.grabbed
+    @canvas.context.clearRect 0, 0, @canvas.width, @canvas.height
 
     for b in @bubbles
       b.paint @canvas.context
-      if @pointer.current? and not @pointer.grabbingBubble()
-        if @canvas.context.isPointInPath @pointer.current.x, @pointer.current.y
-          @pointer.bubble = b
 
     if @pointer.bubble?
       document.body.style.cursor = "pointer"
       @pointer.bubble.popover.paint @pointer, @canvas.context
 
-    if _loop
-      setTimeout (=> @paint()), 1000 / @fps
+    if _animate
+      requestAnimationFrame (=> @paint())
