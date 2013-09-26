@@ -12,6 +12,8 @@ class BubbleChart.Popover
     @lineHeight = 20
     @last_draw = null
 
+  render: () ->
+
   clear: (context) ->
     if @last_draw?
       context.clearRect @last_draw.x, @last_draw.y, @last_draw.w, @last_draw.h
@@ -61,7 +63,7 @@ class BubbleChart.Popover
       x: labelX
       y: labelY
       w: lineWidth
-      h: @lineHeight * 2 + 10 + (triangle.y3 - triangle.y)
+      h: @lineHeight * 2 + 10 + (triangle.y3 - triangle.y) + 5
 
     context.roundedRect labelX, labelY, lineWidth, @lineHeight * 2 + 10, 7
 

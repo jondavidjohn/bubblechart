@@ -22,9 +22,10 @@ class BubbleChart.Bubble
 
     @popover = new BubbleChart.Popover(@, o.popoverOpts or {})
 
-    @pre = document.createElement 'canvas'
+    @pre = null
     @last_draw = null
-    @rendered = false
+
+    @render()
 
   getVelocity: () ->
     x: 0.04 * (@pointOfGravity.x - @position.x)
@@ -84,59 +85,61 @@ class BubbleChart.Bubble
       @bully = true
 
   paint: (context) ->
-    unless @rendered
-      @pre.height = @pre.width = ((@diameter) + 3) * window.devicePixelRatio
-      pre_context = @pre.getContext('2d');
-      pre_context.beginPath()
-      pre_context.fillStyle = @fillColor
-      pre_context.arc @radius + 1, @radius + 1, @radius, 0, Math.PI * 2, true
-      pre_context.fill()
+    if @pre?
+      @last_draw =
+        x: @position.x - @radius
+        y: @position.y - @radius
+        w: @pre.width
+        h: @pre.height
 
-      if @borderColor?
-        pre_context.lineWidth = @borderSize
-        pre_context.strokeStyle = @borderColor
-        pre_context.stroke()
+      context.drawImage @pre, @last_draw.x, @last_draw.y, @last_draw.w, @last_draw.h
 
-      if @textColor
-        pre_context.font = "20px '#{@textFont}'"
-        pre_context.fillStyle = @textColor
+  render: () ->
+    @pre = document.createElement 'canvas'
+    @pre.height = @pre.width = ((@diameter) + 3) * window.devicePixelRatio
+    pre_context = @pre.getContext('2d');
+    pre_context.beginPath()
+    pre_context.fillStyle = @fillColor
+    pre_context.arc @radius + 1, @radius + 1, @radius, 0, Math.PI * 2, true
+    pre_context.fill()
+
+    if @borderColor?
+      pre_context.lineWidth = @borderSize
+      pre_context.strokeStyle = @borderColor
+      pre_context.stroke()
+
+    if @textColor
+      pre_context.font = "20px '#{@textFont}'"
+      pre_context.fillStyle = @textColor
+      text_measurement = pre_context.measureText @label
+      if text_measurement.width + 12 < @diameter
+        spacingX = @radius - (text_measurement.width / 2)
+        spacingY = @radius + (14 / 2)
+        pre_context.fillText @label, spacingX, spacingY
+      else
+        pre_context.font = "12px helvetica"
         text_measurement = pre_context.measureText @label
-        if text_measurement.width + 12 < @diameter
+        if text_measurement.width + 7 < @diameter
           spacingX = @radius - (text_measurement.width / 2)
-          spacingY = @radius + (14 / 2)
+          spacingY = @radius + (4 / 2)
           pre_context.fillText @label, spacingX, spacingY
         else
-          pre_context.font = "12px helvetica"
-          text_measurement = pre_context.measureText @label
-          if text_measurement.width + 7 < @diameter
+          truncated_label = "#{@label}..."
+          while truncated_label and text_measurement.width + 7 >= @diameter
+            truncated_label = truncated_label
+              .substr(0, truncated_label.length - 4)
+              .concat('...')
+
+            truncated_label = false if truncated_label is '...'
+            text_measurement = pre_context.measureText truncated_label
+
+          if truncated_label
             spacingX = @radius - (text_measurement.width / 2)
             spacingY = @radius + (4 / 2)
-            pre_context.fillText @label, spacingX, spacingY
-          else
-            truncated_label = "#{@label}..."
-            while truncated_label and text_measurement.width + 7 >= @diameter
-              truncated_label = truncated_label
-                .substr(0, truncated_label.length - 4)
-                .concat('...')
+            pre_context.fillText truncated_label, spacingX, spacingY
 
-              truncated_label = false if truncated_label is '...'
-              text_measurement = pre_context.measureText truncated_label
+    pre_context.closePath()
 
-            if truncated_label
-              spacingX = @radius - (text_measurement.width / 2)
-              spacingY = @radius + (4 / 2)
-              pre_context.fillText truncated_label, spacingX, spacingY
-
-      pre_context.closePath()
-      @rendered = true
-
-    @last_draw =
-      x: @position.x - @radius
-      y: @position.y - @radius
-      w: @pre.width
-      h: @pre.height
-
-    context.drawImage @pre, @last_draw.x, @last_draw.y, @last_draw.w, @last_draw.h
 
   clear: (context) ->
     if @last_draw?
