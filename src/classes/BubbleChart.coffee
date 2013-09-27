@@ -14,17 +14,17 @@ class @BubbleChart
     o.attribution ?= 'before'
     if o.attribution
       url = 'https://github.com/jondavidjohn/bubblechart'
-      a = document.createElement('div')
+      a = document.createElement 'div'
       a.className = 'bubblechart-attribution'
       a.innerHTML = "<small>(Powered by <a href=\"#{url}\">BubbleChart</a>)</small>"
       if o.attribution is 'before'
-        @canvas.parentNode.insertBefore(a, @canvas)
+        @canvas.parentNode.insertBefore a, @canvas
       if o.attribution is 'after'
-        @canvas.parentNode.insertBefore(a, @canvas.nextSibling)
+        @canvas.parentNode.insertBefore a, @canvas.nextSibling
 
-    comment = document.createComment(' BubbleChart by jondavidjohn (http://jondavidjohn.github.io/bubblechart/) ')
+    comment = document.createComment ' BubbleChart by jondavidjohn (http://jondavidjohn.github.io/bubblechart/) '
     if @canvas.firstChild?
-      @canvas.insertBefore(comment, @canvas.firstChild)
+      @canvas.insertBefore comment, @canvas.firstChild
     else
       @canvas.appendChild comment
 
@@ -87,9 +87,10 @@ class @BubbleChart
         pointOfGravity: @canvas.midpoint
 
       @bubbles.push new BubbleChart.Bubble(opts)
+      @canvas.context.clearRect 0, 0, @canvas.width, @canvas.height
 
   paint: (_animate = true) ->
-    document.body.style.cursor = "default" unless @pointer.grabbingBubble()
+    @canvas.style.cursor = "default" unless @pointer.grabbingBubble()
     @pointer.bubble = null unless @pointer.grabbingBubble()
 
     for b in @bubbles
@@ -116,7 +117,7 @@ class @BubbleChart
       b.paint @canvas.context
 
     if @pointer.bubble?
-      document.body.style.cursor = "pointer"
+      @canvas.style.cursor = "pointer"
       @pointer.bubble.popover.paint @pointer, @canvas.context
 
     if _animate
