@@ -9,3 +9,27 @@ CanvasRenderingContext2D::roundedRect = (x, y, w, h, r) ->
 
 Math.randInt = (max = 100) ->
   Math.floor Math.random() * max
+
+# requestAnimationFrame Polyfill
+do ->
+  lastTime = 0
+  vendors = ['webkit', 'moz']
+
+  unless window.requestAnimationFrame
+    for v in vendors
+      window.requestAnimationFrame = window[v+'RequestAnimationFrame']
+      window.cancelAnimationFrame =
+        window[v+'CancelAnimationFrame'] or
+        window[v+'CancelRequestAnimationFrame']
+
+  unless window.requestAnimationFrame
+    window.requestAnimationFrame = (cb, ele) ->
+      currTime = new Date().getTime()
+      timeToCall = Math.max(0, 16 - (currTime - lastTime))
+      id = window.setTimeout (-> cb(currTime + timeToCall)), timeToCall
+      lastTime = currTime + timeToCall
+      return id
+
+  unless window.cancelAnimationFrame
+    window.cancelAnimationFrame = (id) ->
+      clearTimeout id

@@ -14,17 +14,17 @@ class @BubbleChart
     o.attribution ?= 'before'
     if o.attribution
       url = 'https://github.com/jondavidjohn/bubblechart'
-      a = document.createElement('div')
+      a = document.createElement 'div'
       a.className = 'bubblechart-attribution'
       a.innerHTML = "<small>(Powered by <a href=\"#{url}\">BubbleChart</a>)</small>"
       if o.attribution is 'before'
-        @canvas.parentNode.insertBefore(a, @canvas)
+        @canvas.parentNode.insertBefore a, @canvas
       if o.attribution is 'after'
-        @canvas.parentNode.insertBefore(a, @canvas.nextSibling)
+        @canvas.parentNode.insertBefore a, @canvas.nextSibling
 
-    comment = document.createComment(' BubbleChart by jondavidjohn (http://jondavidjohn.github.io/bubblechart/) ');
+    comment = document.createComment ' BubbleChart by jondavidjohn (http://jondavidjohn.github.io/bubblechart/) '
     if @canvas.firstChild?
-      @canvas.insertBefore(comment, @canvas.firstChild);
+      @canvas.insertBefore comment, @canvas.firstChild
     else
       @canvas.appendChild comment
 
@@ -37,10 +37,10 @@ class @BubbleChart
       # Adjust for retina if needed
       ratio = 1
       if window.devicePixelRatio? and window.devicePixelRatio > 1
-        if c.context.webkitBackingStorePixelRatio < 2
-          ratio = window.devicePixelRatio
+        if c.context.webkitBackingStorePixelRatio == 2
+          window.devicePixelRatio = 1
 
-      if ratio > 1
+      if window.devicePixelRatio > 1
         c.style.height = "#{c.height}px"
         c.style.width = "#{c.width}px"
         c.width = c.width * ratio
@@ -87,8 +87,12 @@ class @BubbleChart
         pointOfGravity: @canvas.midpoint
 
       @bubbles.push new BubbleChart.Bubble(opts)
+      @canvas.context.clearRect 0, 0, @canvas.width, @canvas.height
 
-  paint: (_loop = true) ->
+  paint: (_animate = true) ->
+    @canvas.style.cursor = "default" unless @pointer.grabbingBubble()
+    @pointer.bubble = null unless @pointer.grabbingBubble()
+
     for b in @bubbles
       b.advance @
       for bubble in @bubbles
@@ -97,21 +101,24 @@ class @BubbleChart
         if @contain
           bubble.pushAwayFromEdges(@canvas, @gutter)
 
-    @canvas.context.clearRect 0, 0, @canvas.width, @canvas.height
+      unless @pointer.grabbingBubble()
+        if @pointer.current? and @pointer.current.distance(b.position) <= b.radius
+          @pointer.bubble = b
 
-    if @pointer.bubble?
-      document.body.style.cursor = "default" unless @pointer.bubble.grabbed
-      @pointer.bubble = null unless @pointer.bubble.grabbed
+    for b in @bubbles
+      if b.last_draw?
+        b.clear @canvas.context
+
+    for b in @bubbles
+      if b.popover.last_draw?
+        b.popover.clear @canvas.context
 
     for b in @bubbles
       b.paint @canvas.context
-      if @pointer.current? and not @pointer.grabbingBubble()
-        if @canvas.context.isPointInPath @pointer.current.x, @pointer.current.y
-          @pointer.bubble = b
 
     if @pointer.bubble?
-      document.body.style.cursor = "pointer"
+      @canvas.style.cursor = "pointer"
       @pointer.bubble.popover.paint @pointer, @canvas.context
 
-    if _loop
-      setTimeout (=> @paint()), 1000 / @fps
+    if _animate
+      requestAnimationFrame (=> @paint())

@@ -16,11 +16,16 @@ class BubbleChart.Bubble
     @radius = o.radius
     @position = o.position
     @diameter = @radius * 2
-    @reach = @radius
+    @reach = @radius + 1
     if @borderSize?
       @reach += @borderSize
 
     @popover = new BubbleChart.Popover(@, o.popoverOpts or {})
+
+    @pre = null
+    @last_draw = null
+
+    @render()
 
   getVelocity: () ->
     x: 0.04 * (@pointOfGravity.x - @position.x)
@@ -80,31 +85,44 @@ class BubbleChart.Bubble
       @bully = true
 
   paint: (context) ->
-    context.beginPath()
-    context.fillStyle = @fillColor
-    context.arc @position.x, @position.y, @radius, 0, Math.PI * 2, true
-    context.fill()
+    if @pre?
+      @last_draw =
+        x: @position.x - @radius
+        y: @position.y - @radius
+        w: @pre.width
+        h: @pre.height
+
+      context.drawImage @pre, @last_draw.x, @last_draw.y, @last_draw.w, @last_draw.h
+
+  render: () ->
+    @pre = document.createElement 'canvas'
+    @pre.height = @pre.width = (@diameter + 3) * window.devicePixelRatio
+    pre_context = @pre.getContext '2d'
+    pre_context.beginPath()
+    pre_context.fillStyle = @fillColor
+    pre_context.arc @radius + 1, @radius + 1, @radius, 0, Math.PI * 2, true
+    pre_context.fill()
 
     if @borderColor?
-      context.lineWidth = @borderSize
-      context.strokeStyle = @borderColor
-      context.stroke()
+      pre_context.lineWidth = @borderSize
+      pre_context.strokeStyle = @borderColor
+      pre_context.stroke()
 
     if @textColor
-      context.font = "20px '#{@textFont}'"
-      context.fillStyle = @textColor
-      text_measurement = context.measureText @label
+      pre_context.font = "20px '#{@textFont}'"
+      pre_context.fillStyle = @textColor
+      text_measurement = pre_context.measureText @label
       if text_measurement.width + 12 < @diameter
-        spacingX = @position.x - (text_measurement.width / 2)
-        spacingY = @position.y + (14 / 2)
-        context.fillText @label, spacingX, spacingY
+        spacingX = @radius - (text_measurement.width / 2)
+        spacingY = @radius + (14 / 2)
+        pre_context.fillText @label, spacingX, spacingY
       else
-        context.font = "12px helvetica"
-        text_measurement = context.measureText @label
+        pre_context.font = "12px helvetica"
+        text_measurement = pre_context.measureText @label
         if text_measurement.width + 7 < @diameter
-          spacingX = @position.x - (text_measurement.width / 2)
-          spacingY = @position.y + (4 / 2)
-          context.fillText @label, spacingX, spacingY
+          spacingX = @radius - (text_measurement.width / 2)
+          spacingY = @radius + (4 / 2)
+          pre_context.fillText @label, spacingX, spacingY
         else
           truncated_label = "#{@label}..."
           while truncated_label and text_measurement.width + 7 >= @diameter
@@ -113,11 +131,17 @@ class BubbleChart.Bubble
               .concat('...')
 
             truncated_label = false if truncated_label is '...'
-            text_measurement = context.measureText truncated_label
+            text_measurement = pre_context.measureText truncated_label
 
           if truncated_label
-            spacingX = @position.x - (text_measurement.width / 2)
-            spacingY = @position.y + (4 / 2)
-            context.fillText truncated_label, spacingX, spacingY
+            spacingX = @radius - (text_measurement.width / 2)
+            spacingY = @radius + (4 / 2)
+            pre_context.fillText truncated_label, spacingX, spacingY
 
-    context.closePath()
+    pre_context.closePath()
+
+
+  clear: (context) ->
+    if @last_draw?
+      context.clearRect @last_draw.x - 1, @last_draw.y - 1, @last_draw.w + 2, @last_draw.h + 2
+      @last_draw = null

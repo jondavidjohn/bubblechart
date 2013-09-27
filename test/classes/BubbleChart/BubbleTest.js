@@ -57,10 +57,10 @@
 				radius: 2
 			});
 
-		equal(bubble1.distanceFrom(bubble2), -4.702941459221645);
-		equal(bubble2.distanceFrom(bubble1), -4.702941459221645);
-		equal(bubble2.distanceFrom(bubble3), -3.398529491264556);
-		equal(bubble3.distanceFrom(bubble1), -2.36985418726535);
+		equal(bubble1.distanceFrom(bubble2), -6.702941459221645);
+		equal(bubble2.distanceFrom(bubble1), -6.702941459221645);
+		equal(bubble2.distanceFrom(bubble3), -5.398529491264556);
+		equal(bubble3.distanceFrom(bubble1), -4.36985418726535);
 	});
 
 	test('overlapsWith', function() {
@@ -80,7 +80,7 @@
 		equal(bubble1.overlapsWith(bubble2), true);
 		equal(bubble2.overlapsWith(bubble1), true);
 		equal(bubble2.overlapsWith(bubble3), false);
-		equal(bubble3.overlapsWith(bubble1), false);
+		equal(bubble3.overlapsWith(bubble1), true);
 	});
 
 	test('hasSpatialInferiorityTo', function() {
@@ -126,7 +126,7 @@
 
 		bubble1.resolveCollisionWith(bubble2);
 		equal(bubble1.position.x, 5.000000000000001);
-		equal(bubble1.position.y, 18);
+		equal(bubble1.position.y, 20);
 		equal(bubble2.position.x, 5);
 		equal(bubble2.position.y, 7);
 		equal(bubble1.bully, true);
@@ -153,7 +153,7 @@
 		equal(bubble1.position.x, 5);
 		equal(bubble1.position.y, 10);
 		equal(bubble2.position.x, 5.000000000000001);
-		equal(bubble2.position.y, -1);
+		equal(bubble2.position.y, -3);
 		equal(bubble1.bully, false);
 		equal(bubble2.bully, true);
 		equal(bubble1.overlapsWith(bubble2), false);

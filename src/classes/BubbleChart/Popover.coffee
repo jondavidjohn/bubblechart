@@ -10,6 +10,14 @@ class BubbleChart.Popover
     @textFont = o.textFont or 'helvetica'
     @opacity = o.opacity or 0.6
     @lineHeight = 20
+    @last_draw = null
+
+  render: () ->
+
+  clear: (context) ->
+    if @last_draw?
+      context.clearRect @last_draw.x, @last_draw.y, @last_draw.w, @last_draw.h
+      @last_draw = null
 
   paint: (pointer, context) ->
     return unless pointer.current?
@@ -50,6 +58,12 @@ class BubbleChart.Popover
     context.beginPath()
     context.fillStyle = @fillColor
     context.globalAlpha = @opacity
+
+    @last_draw =
+      x: labelX
+      y: labelY
+      w: lineWidth
+      h: @lineHeight * 2 + 10 + (triangle.y3 - triangle.y) + 5
 
     context.roundedRect labelX, labelY, lineWidth, @lineHeight * 2 + 10, 7
 
