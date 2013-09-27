@@ -143,5 +143,5 @@ class BubbleChart.Bubble
 
   clear: (context) ->
     if @last_draw?
-      context.clearRect @last_draw.x, @last_draw.y, @last_draw.w, @last_draw.h
+      context.clearRect @last_draw.x - 1, @last_draw.y - 1, @last_draw.w + 2, @last_draw.h + 2
       @last_draw = null
