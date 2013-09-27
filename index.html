@@ -10,11 +10,12 @@
 	</style>
 </head>
 <body>
-	<canvas id="bubblechart" height="500" width="600"></canvas>
+	<canvas id="bubblechart" height="700" width="800"></canvas>
 	<script src="dist/bubblechart.js"></script>
 	<script>
 		(function() {
-			var chart;
+			var chart,
+				bubbles = 20;
 
 			chart = new BubbleChart({
 				canvasId: "bubblechart",
@@ -27,30 +28,14 @@
 			chart.paint();
 
 			function getData() {
-				return [{
-					label: "Astring",
-					href: "http://google.com",
-					data: 10,
-					fillColor: "#387C2B"
-				},{
-					label: "Bstring",
-					data: 5
-				},{
-					label: "Cstring",
-					data:35
-				},{
-					label: "Dstringcutmeoffplease",
-					data: 10
-				},{
-					label: "Estring",
-					data: 2
-				},{
-					label: "Fstring",
-					data: 12
-				},{
-					label: "Gstring",
-					data: 17
-				}];
+				var data = [];
+				for (var i = 0; i < bubbles; i++) {
+					data.push({
+						label: Math.random().toString(36).substring(7),
+						data: Math.floor(Math.random() * 100),
+					});
+				}
+				return data;
 			}
 		})();
 	</script>
