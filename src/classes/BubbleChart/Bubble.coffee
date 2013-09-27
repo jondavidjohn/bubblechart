@@ -96,8 +96,8 @@ class BubbleChart.Bubble
 
   render: () ->
     @pre = document.createElement 'canvas'
-    @pre.height = @pre.width = ((@diameter) + 3) * window.devicePixelRatio
-    pre_context = @pre.getContext('2d');
+    @pre.height = @pre.width = (@diameter + 3) * window.devicePixelRatio
+    pre_context = @pre.getContext '2d'
     pre_context.beginPath()
     pre_context.fillStyle = @fillColor
     pre_context.arc @radius + 1, @radius + 1, @radius, 0, Math.PI * 2, true
