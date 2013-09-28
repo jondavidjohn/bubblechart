@@ -8,6 +8,7 @@ class BubbleChart.Bubble
     @label = o.label
     @metric = o.metric
     @data = o.data
+    @img_src = o.img_src
     @fillColor = o.fillColor
     @borderColor = o.borderColor
     @textColor = o.textColor
@@ -23,6 +24,7 @@ class BubbleChart.Bubble
     @popover = new BubbleChart.Popover(@, o.popoverOpts or {})
 
     @pre = null
+    @img = new Image()
     @last_draw = null
 
     @render()
@@ -93,8 +95,28 @@ class BubbleChart.Bubble
         h: @pre.height
 
       context.drawImage @pre, @last_draw.x, @last_draw.y, @last_draw.w, @last_draw.h
+      if @img.loaded
+        context.drawImage @img, @last_draw.x + 10, @last_draw.y + 10, @img.width, @img.height
 
   render: () ->
+    if @img_src?
+      @img.onload = () =>
+        canvas = document.createElement 'canvas'
+        ctx = canvas.getContext '2d'
+        ctx.save()
+        ctx.beginPath()
+        ctx.arc 0, 0, @img.width / 2, Math.PI * 2, true
+        ctx.closePath()
+        ctx.clip()
+
+        ctx.drawImage @img, 0, 0, @img.width, @img.width
+
+        ctx.beginPath()
+        ctx.arc 0, 0, @img.width / 2, Math.PI * 2, true
+        ctx.clip()
+        ctx.closePath()
+        ctx.restore()
+      @img.src = @img_src
     @pre = document.createElement 'canvas'
     @pre.height = @pre.width = (@diameter + 3) * window.devicePixelRatio
     pre_context = @pre.getContext '2d'
@@ -139,7 +161,6 @@ class BubbleChart.Bubble
             pre_context.fillText truncated_label, spacingX, spacingY
 
     pre_context.closePath()
-
 
   clear: (context) ->
     if @last_draw?
