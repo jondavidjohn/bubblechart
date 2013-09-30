@@ -70,8 +70,22 @@ get the visual representation of your data.
   metric: "this specific metric",
   borderColor: "#FFF",
   borderSize: 3,
+  img_src: 'http://.../someImage.jpg'
 }
 ```
+
+#### Images
+
+You can provide an image to be centered within the bubble, but keep in mind
+the following
+
+  - Images are expected to be square, it will try to be smart and crop the
+  image respecting width over height, but providing square images will take
+  the guess work out of it.
+  - Images will be used at full size if the width of the image is less than
+  66% of the bubble diameter.
+  - If the Image width is between 66% and 80% of the diameter of the bubble,
+  it will scale the image down by 33% to more comfortably fit in the bubble.
 
 ## Requirements
 
