@@ -95,27 +95,28 @@ class BubbleChart.Bubble
         h: @pre.height
 
       context.drawImage @pre, @last_draw.x, @last_draw.y, @last_draw.w, @last_draw.h
-      if @img.loaded
-        context.drawImage @img, @last_draw.x + 10, @last_draw.y + 10, @img.width, @img.height
 
   render: () ->
     if @img_src?
       @img.onload = () =>
-        canvas = document.createElement 'canvas'
-        ctx = canvas.getContext '2d'
-        ctx.save()
-        ctx.beginPath()
-        ctx.arc 0, 0, @img.width / 2, Math.PI * 2, true
-        ctx.closePath()
-        ctx.clip()
-
-        ctx.drawImage @img, 0, 0, @img.width, @img.width
-
-        ctx.beginPath()
-        ctx.arc 0, 0, @img.width / 2, Math.PI * 2, true
-        ctx.clip()
-        ctx.closePath()
-        ctx.restore()
+        if @img.width < @diameter / 1.25
+          canvas = document.createElement 'canvas'
+          canvas.height = @img.height
+          canvas.width = @img.width + 2
+          ctx = canvas.getContext '2d'
+          ctx.save()
+          ctx.beginPath()
+          ctx.arc @img.width / 2 + 2, @img.height / 2, @img.width / 2, 0, Math.PI * 2, true
+          ctx.closePath()
+          ctx.clip()
+          ctx.drawImage @img, 2, 0, @img.width, @img.height
+          ctx.restore()
+          ctx.arc @img.width / 2 + 2, @img.height / 2, @img.width / 2, 0, Math.PI * 2, true
+          ctx.lineWidth = 1
+          ctx.strokeStyle = @fillColor
+          ctx.stroke()
+          pre_ctx = @pre.getContext '2d'
+          pre_ctx.drawImage canvas, @radius - (canvas.width / 2), @radius - ((@img.height - @img.width) / 2) - (@img.width / 2), canvas.width, canvas.height
       @img.src = @img_src
     @pre = document.createElement 'canvas'
     @pre.height = @pre.width = (@diameter + 3) * window.devicePixelRatio
