@@ -5,7 +5,6 @@ class @BubbleChart
     @data = o.data or []
     @metric = o.metric
     @fillColors = o.fillColors or []
-    @fps = o.fps or 60
     @contain = o.contain or false
     @gutter = o.gutter or 0
 

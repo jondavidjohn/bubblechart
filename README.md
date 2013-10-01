@@ -39,7 +39,6 @@ This is the exploded view of possbile options (with included defaults)
 
   contain: false,       // keep bubbles within the canvas
   gutter: 0,            // containment gutter
-  fps: 60,              // The draw rate/speed
   borderColor: "",      // Global Bubble border color
   borderSize: 0,        // Global Bubble border size
   textColor: "#fff"     // Bubble label color
