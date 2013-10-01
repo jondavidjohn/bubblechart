@@ -19,13 +19,19 @@
 
 			chart = new BubbleChart({
 				canvasId: "bubblechart",
-				data: getData(),
 				metric: "things",
 				textColor: "#FFF",
 				fillColors: ["#02151A", "#B31D14", "#043A47", "#087891"]
 			});
 
-			chart.paint();
+			chart.spinner.start()
+
+			setTimeout(function() {
+				chart.data = getData();
+				chart.reload();
+				chart.spinner.stop();
+				chart.paint();
+			}, 2000);
 
 			function getData() {
 				var data = [];

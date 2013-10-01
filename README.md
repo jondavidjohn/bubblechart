@@ -87,6 +87,31 @@ the following
   - If the Image width is between 66% and 80% of the diameter of the bubble,
   it will scale the image down by 33% to more comfortably fit in the bubble.
 
+#### Loading Spinner
+
+There is a provided Spinner object you can use to show a loading animation if
+loading your custom data is a time consuming process.
+
+Example
+
+```js
+var chart = new BubbleChart({
+  canvasId: "bubblechart",
+  metric: "Kb",
+  usedArea: 0.35,
+  contain: true,
+  popoverOpts: {
+    textFont: "Open Sans",
+  }
+});
+
+chart.spinner.start();
+chart.data = myCustomData();
+chart.reload()
+chart.spinner.stop();
+chart.paint();
+```
+
 ## Requirements
 
   - IE9+ (required `<canvas>` support)
