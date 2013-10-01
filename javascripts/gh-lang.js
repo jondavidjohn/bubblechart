@@ -41,6 +41,7 @@
 		input.disabled = true;
 		button.disabled = true;
 		button.className = button.className += ' disabled';
+		chart.spinner.start();
 
 		rm.execJSONP(
 			_url('users/'+username+'/repos'),
@@ -91,6 +92,7 @@
 				}
 
 				if (chart.data.length) {
+					chart.spinner.stop();
 					chart.reload();
 					chart.paint();
 				}

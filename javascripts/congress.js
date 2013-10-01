@@ -2,8 +2,7 @@
 	var chart = new BubbleChart({
 			canvasId: "congress-canvas",
 			metric: "% - Non-votes",
-			usedArea: 0.35,
-			contain: true,
+			usedArea: 0.4,
 			attribution: false,
 			popoverOpts: {
 				textFont: "Raleway",
@@ -14,6 +13,8 @@
 		nonvote_data = {},
 		totalvote_data = {},
 		chart_data = [];
+
+	chart.spinner.start();
 
 	function _url(endpoint, params) {
 		var base_url = 'http://congress.api.sunlightfoundation.com/',
@@ -37,11 +38,13 @@
 		// Make sure we're dealing with someone still in office
 		if (legislators.hasOwnProperty(bioguide_id) && legislators[bioguide_id].in_office === "1") {
 			leg = legislators[bioguide_id];
+			console.log(leg);
 			return {
 				label: leg.title + '. ' + leg.firstname + ' ' + leg.lastname + ' (' + leg.party + '-' + leg.state + ')',
 				data: stat,
 				fillColor: getPartyColor(leg.party),
-				href: leg.congresspedia_url
+				href: leg.congresspedia_url,
+				img_src: '/bubblechart/images/leg/' + bioguide_id + '.jpg'
 			};
 		}
 	}
@@ -87,6 +90,7 @@
 
 			chart.data = chart_data;
 			chart.reload();
+			chart.spinner.stop();
 			chart.paint();
 		}
 	};
