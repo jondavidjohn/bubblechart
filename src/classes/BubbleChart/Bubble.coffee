@@ -8,6 +8,7 @@ class BubbleChart.Bubble
     @label = o.label
     @metric = o.metric
     @data = o.data
+    @img_src = o.img_src
     @fillColor = o.fillColor
     @borderColor = o.borderColor
     @textColor = o.textColor
@@ -23,6 +24,7 @@ class BubbleChart.Bubble
     @popover = new BubbleChart.Popover(@, o.popoverOpts or {})
 
     @pre = null
+    @img = new Image()
     @last_draw = null
 
     @render()
@@ -95,6 +97,37 @@ class BubbleChart.Bubble
       context.drawImage @pre, @last_draw.x, @last_draw.y, @last_draw.w, @last_draw.h
 
   render: () ->
+    if @img_src?
+      @img.onload = () =>
+        while @img.width > @diameter * 0.8
+          @img.height = @img.height * 0.75
+          @img.width = @img.width * 0.75
+        canvas = document.createElement 'canvas'
+        canvas.height = @img.height
+        canvas.width = @img.width + 2
+        img_arc_x = @img.width / 2 + 2
+        img_arc_y = @img.height / 2
+        img_arc_r = @img.width / 2
+        ctx = canvas.getContext '2d'
+        ctx.save()
+        ctx.beginPath()
+        ctx.arc img_arc_x, img_arc_y, img_arc_r, 0, Math.PI * 2, true
+        ctx.closePath()
+        ctx.clip()
+        ctx.drawImage @img, 1, 0, @img.width, @img.height
+        ctx.restore()
+        ctx.arc img_arc_x, img_arc_y, @img.width / 2, 0, Math.PI * 2, true
+        ctx.lineWidth = 1
+        ctx.strokeStyle = @fillColor
+        ctx.stroke()
+        pre_ctx = @pre.getContext '2d'
+        pre_ctx.drawImage( canvas,
+          @radius - (canvas.width / 2),
+          @radius - ((@img.height - @img.width) / 2) - (@img.width / 2),
+          canvas.width,
+          canvas.height
+        )
+      @img.src = @img_src
     @pre = document.createElement 'canvas'
     @pre.height = @pre.width = (@diameter + 3) * window.devicePixelRatio
     pre_context = @pre.getContext '2d'
@@ -139,7 +172,6 @@ class BubbleChart.Bubble
             pre_context.fillText truncated_label, spacingX, spacingY
 
     pre_context.closePath()
-
 
   clear: (context) ->
     if @last_draw?

@@ -15,7 +15,7 @@
 	<script>
 		(function() {
 			var chart,
-				bubbles = 20;
+				bubbles = 5;
 
 			chart = new BubbleChart({
 				canvasId: "bubblechart",
@@ -33,6 +33,7 @@
 					data.push({
 						label: Math.random().toString(36).substring(7),
 						data: Math.floor(Math.random() * 100),
+						img_src: 'http://www.opencongress.org/images/photos/thumbs_125/400184.jpeg'
 					});
 				}
 				return data;
