@@ -58,9 +58,10 @@ class @BubbleChart
       c.usableArea = c.area * (o.usedArea || 0.2)
       c.midpoint = new BubbleChart.Point(c.width / 2, c.height / 2)
 
+      @spinner = new BubbleChart.Spinner(@canvas)
+
     if @data.length
       @reload()
-
 
   reload: () ->
     @bubbles = []
