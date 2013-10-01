@@ -99,27 +99,34 @@ class BubbleChart.Bubble
   render: () ->
     if @img_src?
       @img.onload = () =>
-        if @img.width < @diameter / 1.25
-          canvas = document.createElement 'canvas'
-          if @img.width > @diameter / 1.5
-            @img.height = @img.height / 1.5
-            @img.width = @img.width / 1.5
-          canvas.height = @img.height
-          canvas.width = @img.width + 2
-          ctx = canvas.getContext '2d'
-          ctx.save()
-          ctx.beginPath()
-          ctx.arc @img.width / 2 + 2, @img.height / 2, @img.width / 2, 0, Math.PI * 2, true
-          ctx.closePath()
-          ctx.clip()
-          ctx.drawImage @img, 1, 0, @img.width, @img.height
-          ctx.restore()
-          ctx.arc @img.width / 2 + 2, @img.height / 2, @img.width / 2, 0, Math.PI * 2, true
-          ctx.lineWidth = 1
-          ctx.strokeStyle = @fillColor
-          ctx.stroke()
-          pre_ctx = @pre.getContext '2d'
-          pre_ctx.drawImage canvas, parseInt(@radius - (canvas.width / 2), 10), parseInt(@radius - ((@img.height - @img.width) / 2) - (@img.width / 2), 10), canvas.width, canvas.height
+        while @img.width > @diameter * 0.85
+          @img.height = @img.height * 0.75
+          @img.width = @img.width * 0.75
+        canvas = document.createElement 'canvas'
+        canvas.height = @img.height
+        canvas.width = @img.width + 2
+        img_arc_x = @img.width / 2 + 2
+        img_arc_y = @img.height / 2
+        img_arc_r = @img.width / 2
+        ctx = canvas.getContext '2d'
+        ctx.save()
+        ctx.beginPath()
+        ctx.arc img_arc_x, img_arc_y, img_arc_r, 0, Math.PI * 2, true
+        ctx.closePath()
+        ctx.clip()
+        ctx.drawImage @img, 1, 0, @img.width, @img.height
+        ctx.restore()
+        ctx.arc img_arc_x, img_arc_y, @img.width / 2, 0, Math.PI * 2, true
+        ctx.lineWidth = 1
+        ctx.strokeStyle = @fillColor
+        ctx.stroke()
+        pre_ctx = @pre.getContext '2d'
+        pre_ctx.drawImage( canvas,
+          @radius - (canvas.width / 2),
+          @radius - ((@img.height - @img.width) / 2) - (@img.width / 2),
+          canvas.width,
+          canvas.height
+        )
       @img.src = @img_src
     @pre = document.createElement 'canvas'
     @pre.height = @pre.width = (@diameter + 3) * window.devicePixelRatio
