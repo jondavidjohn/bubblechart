@@ -31,6 +31,5 @@ class BubbleChart.Spinner
     else
       @canvas.context.clearRect 0, 0, @canvas.width, @canvas.height
 
-
   stop: () ->
     @running = false
