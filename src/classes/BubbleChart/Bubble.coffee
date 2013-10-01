@@ -99,7 +99,7 @@ class BubbleChart.Bubble
   render: () ->
     if @img_src?
       @img.onload = () =>
-        while @img.width > @diameter * 0.85
+        while @img.width > @diameter * 0.8
           @img.height = @img.height * 0.75
           @img.width = @img.width * 0.75
         canvas = document.createElement 'canvas'
