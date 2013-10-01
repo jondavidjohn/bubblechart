@@ -15,14 +15,15 @@ do ->
   lastTime = 0
   vendors = ['webkit', 'moz']
 
-  unless window.requestAnimationFrame
-    for v in vendors
-      window.requestAnimationFrame = window[v+'RequestAnimationFrame']
-      window.cancelAnimationFrame =
-        window[v+'CancelAnimationFrame'] or
-        window[v+'CancelRequestAnimationFrame']
+  while not window.requestAnimationFrame and vendors.length
+    v = vendors.pop()
+    window.requestAnimationFrame = window[v+'RequestAnimationFrame']
+    window.cancelAnimationFrame =
+      window[v+'CancelAnimationFrame'] or
+      window[v+'CancelRequestAnimationFrame']
 
   unless window.requestAnimationFrame
+    console.log "janky polyfill"
     window.requestAnimationFrame = (cb, ele) ->
       currTime = new Date().getTime()
       timeToCall = Math.max(0, 16 - (currTime - lastTime))
