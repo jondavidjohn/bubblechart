@@ -57,7 +57,7 @@ class @BubbleChart
       c.usableArea = c.area * (o.usedArea || 0.2)
       c.midpoint = new BubbleChart.Point(c.width / 2, c.height / 2)
 
-      @spinner = new BubbleChart.Spinner(@canvas)
+      @spinner = new BubbleChart.Spinner(@canvas.context)
 
     if @data.length
       @reload()
@@ -90,10 +90,7 @@ class @BubbleChart
       @bubbles.push new BubbleChart.Bubble(opts)
       @canvas.context.clearRect 0, 0, @canvas.width, @canvas.height
 
-  paint: (_animate = true) ->
-    @canvas.style.cursor = "default" unless @pointer.grabbingBubble()
-    @pointer.bubble = null unless @pointer.grabbingBubble()
-
+  advance: () ->
     for b in @bubbles
       b.advance @
       for bubble in @bubbles
@@ -102,9 +99,14 @@ class @BubbleChart
         if @contain
           bubble.pushAwayFromEdges(@canvas, @gutter)
 
-      unless @pointer.grabbingBubble()
-        if @pointer.current? and @pointer.current.distance(b.position) <= b.radius
-          @pointer.bubble = b
+
+  paint: (_animate = true) ->
+    @canvas.style.cursor = "default" unless @pointer.grabbingBubble()
+    @pointer.bubble = null unless @pointer.grabbingBubble()
+
+    # Fire non-blocking advance calculations
+    # so we don't block RAF
+    setTimeout (=> @advance()), 0
 
     for b in @bubbles
       if b.last_draw?
@@ -113,6 +115,10 @@ class @BubbleChart
     for b in @bubbles
       if b.popover.last_draw?
         b.popover.clear @canvas.context
+
+      unless @pointer.grabbingBubble()
+        if @pointer.current? and @pointer.current.distance(b.position) <= b.radius
+          @pointer.bubble = b
 
     for b in @bubbles
       b.paint @canvas.context
