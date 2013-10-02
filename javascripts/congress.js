@@ -38,13 +38,12 @@
 		// Make sure we're dealing with someone still in office
 		if (legislators.hasOwnProperty(bioguide_id) && legislators[bioguide_id].in_office === "1") {
 			leg = legislators[bioguide_id];
-			console.log(leg);
 			return {
 				label: leg.title + '. ' + leg.firstname + ' ' + leg.lastname + ' (' + leg.party + '-' + leg.state + ')',
 				data: stat,
 				fillColor: getPartyColor(leg.party),
 				href: leg.congresspedia_url,
-				img_src: '/bubblechart/images/leg/' + bioguide_id + '.jpg'
+				img_src: '/bubblechart/images/leg/' + bioguide_id + '.jpg',
 			};
 		}
 	}
