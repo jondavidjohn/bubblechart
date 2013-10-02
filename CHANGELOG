@@ -1,4 +1,4 @@
-= 1.0.1-dev
+= 1.1.0
   * Move the requestAnimationFrame and general performance enhancements
   * Implement Images support in bubbles
   * Add Spinner control for longer data loading times
