@@ -75,16 +75,27 @@ get the visual representation of your data.
 
 #### Images
 
-You can provide an image to be centered within the bubble, but keep in mind
-the following
+You can provide an image to be centered within the bubble by providing
+a `img_src` property in your data objects.  **Keep in mind the following:**
 
   - Images are expected to be square, it will try to be smart and crop the
   image respecting width over height, but providing square images will take
   the guess work out of it.
   - Images will be used at full size if the width of the image is less than
-  66% of the bubble diameter.
-  - If the Image width is between 66% and 80% of the diameter of the bubble,
-  it will scale the image down by 33% to more comfortably fit in the bubble.
+  80% of the bubble diameter.
+  - Bubbles will be sized down to fit no more than 80% of the bubble area
+  - You can specify a `img_area` to adjust the display
+
+Example of a data object with an image covering 60% of the bubble:
+
+```js
+{
+  label: "Name of the thing",
+  data: 10,
+  img_src: 'http://.../image.jpg'
+  img_area: 0.6
+}
+```
 
 #### Loading Spinner
 
