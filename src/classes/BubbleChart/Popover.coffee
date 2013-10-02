@@ -1,8 +1,5 @@
 class BubbleChart.Popover
 
-  ###
-  # Hover Popover
-  ###
   constructor : (bubble, o) ->
     @bubble = bubble
     @fillColor = o.fillColor or '#333'
@@ -11,8 +8,6 @@ class BubbleChart.Popover
     @opacity = o.opacity or 0.8
     @lineHeight = 20
     @last_draw = null
-
-  render: () ->
 
   clear: (context) ->
     if @last_draw?

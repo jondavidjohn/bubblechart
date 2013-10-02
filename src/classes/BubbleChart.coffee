@@ -100,7 +100,6 @@ class @BubbleChart
         if @contain
           bubble.pushAwayFromEdges(@canvas, @gutter)
 
-
   paint: (_animate = true) ->
     @canvas.style.cursor = "default" unless @pointer.grabbingBubble()
     @pointer.bubble = null unless @pointer.grabbingBubble()

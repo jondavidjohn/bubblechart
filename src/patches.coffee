@@ -22,6 +22,7 @@ do ->
       window[v+'CancelAnimationFrame'] or
       window[v+'CancelRequestAnimationFrame']
 
+  # If no native RAF available, implement a primitive using setTimeout
   unless window.requestAnimationFrame
     window.requestAnimationFrame = (cb, ele) ->
       currTime = new Date().getTime()

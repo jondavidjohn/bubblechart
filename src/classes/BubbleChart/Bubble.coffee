@@ -95,7 +95,12 @@ class BubbleChart.Bubble
         w: @pre.width
         h: @pre.height
 
-      context.drawImage @pre, @last_draw.x, @last_draw.y, @last_draw.w, @last_draw.h
+      context.drawImage( @pre,
+        @last_draw.x,
+        @last_draw.y,
+        @last_draw.w,
+        @last_draw.h
+      )
 
   render: () ->
     if @img_src?
@@ -176,5 +181,10 @@ class BubbleChart.Bubble
 
   clear: (context) ->
     if @last_draw?
-      context.clearRect @last_draw.x - 5, @last_draw.y - 5, @last_draw.w + 10, @last_draw.h + 10
+      context.clearRect(
+        @last_draw.x - 5,
+        @last_draw.y - 5,
+        @last_draw.w + 10,
+        @last_draw.h + 10
+      )
       @last_draw = null
