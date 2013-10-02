@@ -74,6 +74,7 @@ class @BubbleChart
         metric: d.metric or @o.metric
         data: d.data
         img_src: d.img_src
+        img_area: d.img_area
         fillColor: d.fillColor or randColor
         borderColor: d.borderColor or @o.borderColor
         textColor: d.textColor or @o.textColor

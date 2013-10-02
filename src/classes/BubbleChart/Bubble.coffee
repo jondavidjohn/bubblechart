@@ -18,6 +18,7 @@ class BubbleChart.Bubble
     @position = o.position
     @diameter = @radius * 2
     @reach = @radius + 1
+    @img_area = o.img_area or 0.8
     if @borderSize?
       @reach += @borderSize
 
@@ -99,7 +100,7 @@ class BubbleChart.Bubble
   render: () ->
     if @img_src?
       @img.onload = () =>
-        while @img.width > @diameter * 0.8
+        while @img.width > @diameter * @img_area
           @img.height = @img.height * 0.75
           @img.width = @img.width * 0.75
         canvas = document.createElement 'canvas'
