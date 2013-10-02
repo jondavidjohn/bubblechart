@@ -4,6 +4,7 @@
 			metric: "% - Non-votes",
 			usedArea: 0.4,
 			attribution: false,
+			contain: true,
 			popoverOpts: {
 				textFont: "Raleway",
 			}
