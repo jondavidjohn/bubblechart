@@ -10,47 +10,39 @@
 	</style>
 </head>
 <body>
-	<canvas id="bubblechart" height="500" width="600"></canvas>
+	<canvas id="bubblechart" height="700" width="800"></canvas>
 	<script src="dist/bubblechart.js"></script>
 	<script>
 		(function() {
-			var chart;
+			var chart,
+				bubbles = 5;
 
 			chart = new BubbleChart({
 				canvasId: "bubblechart",
-				data: getData(),
 				metric: "things",
 				textColor: "#FFF",
 				fillColors: ["#02151A", "#B31D14", "#043A47", "#087891"]
 			});
 
-			chart.paint();
+			chart.spinner.start()
+
+			setTimeout(function() {
+				chart.data = getData();
+				chart.reload();
+				chart.spinner.stop();
+				chart.paint();
+			}, 2000);
 
 			function getData() {
-				return [{
-					label: "Astring",
-					href: "http://google.com",
-					data: 10,
-					fillColor: "#387C2B"
-				},{
-					label: "Bstring",
-					data: 5
-				},{
-					label: "Cstring",
-					data:35
-				},{
-					label: "Dstringcutmeoffplease",
-					data: 10
-				},{
-					label: "Estring",
-					data: 2
-				},{
-					label: "Fstring",
-					data: 12
-				},{
-					label: "Gstring",
-					data: 17
-				}];
+				var data = [];
+				for (var i = 0; i < bubbles; i++) {
+					data.push({
+						label: Math.random().toString(36).substring(7),
+						data: Math.floor(Math.random() * 100),
+						img_src: 'http://www.opencongress.org/images/photos/thumbs_125/400184.jpeg'
+					});
+				}
+				return data;
 			}
 		})();
 	</script>

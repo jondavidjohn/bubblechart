@@ -39,7 +39,6 @@ This is the exploded view of possbile options (with included defaults)
 
   contain: false,       // keep bubbles within the canvas
   gutter: 0,            // containment gutter
-  fps: 60,              // The draw rate/speed
   borderColor: "",      // Global Bubble border color
   borderSize: 0,        // Global Bubble border size
   textColor: "#fff"     // Bubble label color
@@ -70,7 +69,57 @@ get the visual representation of your data.
   metric: "this specific metric",
   borderColor: "#FFF",
   borderSize: 3,
+  img_src: 'http://.../someImage.jpg'
 }
+```
+
+#### Images
+
+You can provide an image to be centered within the bubble by providing
+a `img_src` property in your data objects.  **Keep in mind the following:**
+
+  - Images are expected to be square, it will try to be smart and crop the
+  image respecting width over height, but providing square images will take
+  the guess work out of it.
+  - Images will be used at full size if the width of the image is less than
+  80% of the bubble diameter.
+  - Bubbles will be sized down to fit no more than 80% of the bubble area
+  - You can specify a `img_area` to adjust the display
+
+Example of a data object with an image covering 60% of the bubble:
+
+```js
+{
+  label: "Name of the thing",
+  data: 10,
+  img_src: 'http://.../image.jpg'
+  img_area: 0.6
+}
+```
+
+#### Loading Spinner
+
+There is a provided Spinner object you can use to show a loading animation if
+loading your custom data is a time consuming process.
+
+Example
+
+```js
+var chart = new BubbleChart({
+  canvasId: "bubblechart",
+  metric: "Kb",
+  usedArea: 0.35,
+  contain: true,
+  popoverOpts: {
+    textFont: "Open Sans",
+  }
+});
+
+chart.spinner.start();
+chart.data = myCustomData();
+chart.reload()
+chart.spinner.stop();
+chart.paint();
 ```
 
 ## Requirements

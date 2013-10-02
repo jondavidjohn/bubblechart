@@ -34,6 +34,8 @@ class BubbleChart.Pointer
           if window? and self.bubble.href?
             window.location.href = self.bubble.href
         self.dragging = false
+      if e.type is 'mouseout'
+        self.current = null
 
   grabbingBubble: ->
     @bubble? and @bubble.grabbed
