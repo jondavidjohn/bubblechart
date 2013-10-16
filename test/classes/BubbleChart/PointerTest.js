@@ -29,11 +29,11 @@
 
 		window.devicePixelRatio = 2;
 		canvas.context.webkitBackingStorePixelRatio = 1;
-		equal(pointer.getPixelRatio(canvas), window.devicePixelRatio);
+		equal(BubbleChart.getPixelRatio(canvas), window.devicePixelRatio);
 
 		window.devicePixelRatio = 2;
 		canvas.context.webkitBackingStorePixelRatio = 2;
-		equal(pointer.getPixelRatio(canvas), 1);
+		equal(BubbleChart.getPixelRatio(canvas), 1);
 	});
 
 	test('getPosition', function() {

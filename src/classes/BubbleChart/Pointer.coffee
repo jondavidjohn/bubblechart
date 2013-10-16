@@ -40,19 +40,13 @@ class BubbleChart.Pointer
   grabbingBubble: ->
     @bubble? and @bubble.grabbed
 
-  getPixelRatio: (c) ->
-    ratio = 1
-    if window.devicePixelRatio? and c.context.webkitBackingStorePixelRatio < 2
-        ratio = window.devicePixelRatio
-    ratio
-
   getPosition: do ->
     top = {}
     left = {}
     (e) ->
       element = e.target or e.srcElement
       element_id = element.id
-      pr = @getPixelRatio(element)
+      pr = BubbleChart.getPixelRatio(element)
       unless top[element_id]? and left[element_id]?
         top[element_id] = 0
         left[element_id] = 0

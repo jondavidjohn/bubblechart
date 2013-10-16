@@ -1,3 +1,6 @@
+= 1.1.0.pre
+  * Fix mouse position for retina displays - Issue #1
+
 = 1.1.0
   * Move the requestAnimationFrame and general performance enhancements
   * Implement Images support in bubbles

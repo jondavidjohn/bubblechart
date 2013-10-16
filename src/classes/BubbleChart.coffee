@@ -34,16 +34,11 @@ class @BubbleChart
       c.context = c.getContext '2d'
 
       # Adjust for retina if needed
-      ratio = 1
-      if window.devicePixelRatio? and window.devicePixelRatio > 1
-        if c.context.webkitBackingStorePixelRatio == 2
-          window.devicePixelRatio = 1
-
-      if window.devicePixelRatio > 1
-        c.style.height = "#{c.height}px"
-        c.style.width = "#{c.width}px"
-        c.width = c.width * ratio
-        c.height = c.height * ratio
+      ratio = BubbleChart.getPixelRatio(c)
+      c.style.height = "#{c.height}px"
+      c.style.width = "#{c.width}px"
+      c.width = c.width * ratio
+      c.height = c.height * ratio
 
       # Attach Canvas Mouse/Touch events
       c.style.position = "relative"
@@ -61,6 +56,15 @@ class @BubbleChart
 
     if @data.length
       @reload()
+
+  @getPixelRatio: (canvas) ->
+    ratio = window.devicePixelRatio or 1
+    backingStoreRatio = canvas.context.webkitBackingStorePixelRatio or
+                        canvas.context.mozBackingStorePixelRatio or
+                        canvas.context.msBackingStorePixelRatio or
+                        canvas.context.oBackingStorePixelRatio or
+                        canvas.context.backingStorePixelRatio or 1
+    ratio / backingStoreRatio
 
   reload: () ->
     @bubbles = []
