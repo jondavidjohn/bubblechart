@@ -35,6 +35,21 @@
 		equal(chart.metricTotal, 60);
 	});
 
+	test('getPixelRatio', function() {
+		var canvas = document.getElementById('test_canvas');
+
+		canvas.context = canvas.getContext('2d');
+
+		window.devicePixelRatio = 2;
+		canvas.context.webkitBackingStorePixelRatio = 1;
+		equal(BubbleChart.getPixelRatio(canvas.context), window.devicePixelRatio);
+
+		window.devicePixelRatio = 2;
+		canvas.context.webkitBackingStorePixelRatio = 2;
+		equal(BubbleChart.getPixelRatio(canvas.context), 1);
+	});
+
+
 	test('attribution-before-default', function() {
 		var chart = generate();
 		notStrictEqual(chart.canvas.previousSibling.innerHTML.indexOf('https://github.com/jondavidjohn/bubblechart'), -1);
