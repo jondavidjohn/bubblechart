@@ -8,6 +8,8 @@ class BubbleChart.Popover
     @opacity = o.opacity or 0.8
     @lineHeight = 20
     @last_draw = null
+    @large_font_size = 17
+    @small_font_size = 11
 
   clear: (context) ->
     if @last_draw?
@@ -16,35 +18,36 @@ class BubbleChart.Popover
 
   paint: (pointer, context) ->
     return unless pointer.current?
-
-    context.font = "17px '#{@textFont}'"
+    ratio = BubbleChart.getPixelRatio context
+    lh = @lineHeight * ratio
+    context.font = "#{@large_font_size * ratio}px '#{@textFont}'"
     label_measurement = context.measureText @bubble.label
     metric_measurement = context.measureText "#{@bubble.data} #{@bubble.metric}"
     lineWidth = if label_measurement.width > metric_measurement.width
-        label_measurement.width + 15
+        label_measurement.width + (15 * ratio)
       else
-        metric_measurement.width + 15
+        metric_measurement.width + (15 * ratio)
 
-    labelX = pointer.current.x - 14
-    labelY = pointer.current.y - 26 - @lineHeight * 2
+    labelX = pointer.current.x - (14 * ratio)
+    labelY = pointer.current.y - (26 * ratio) - lh * 2
     triangle =
       x: 0, y: 0
       x2:0, y2:0
       x3:0, y3:0
 
     if labelY < 0
-      labelY = pointer.current.y + 26
-      triangle.y = pointer.current.y + 26
-      triangle.y3 = triangle.y - 4
+      labelY = pointer.current.y + (26 * ratio)
+      triangle.y = pointer.current.y + (26 * ratio)
+      triangle.y3 = triangle.y - (4 * ratio)
     else
-      triangle.y  = pointer.current.y - 16
-      triangle.y3 = pointer.current.y - 10
+      triangle.y  = pointer.current.y - (16 * ratio)
+      triangle.y3 = pointer.current.y - (10 * ratio)
 
     # triangle setup
-    triangle.x  = pointer.current.x - 8
-    triangle.x2 = triangle.x + 16
+    triangle.x  = pointer.current.x - (8 * ratio)
+    triangle.x2 = triangle.x + (16 * ratio)
     triangle.y2 = triangle.y
-    triangle.x3 = triangle.x2 - 8
+    triangle.x3 = triangle.x2 - (8 * ratio)
 
     # right edge case
     if labelX + lineWidth > context.canvas.width
@@ -58,9 +61,9 @@ class BubbleChart.Popover
       x: labelX
       y: labelY
       w: lineWidth
-      h: @lineHeight * 2 + 10 + (triangle.y3 - triangle.y) + 5
+      h: lh * 2 + (10 * ratio) + (triangle.y3 - triangle.y) + (5 * ratio)
 
-    context.roundedRect labelX, labelY, lineWidth, @lineHeight * 2 + 10, 7
+    context.roundedRect labelX, labelY, lineWidth, lh * 2 + (10 * ratio), 7 * ratio
 
     context.moveTo triangle.x,  triangle.y
     context.lineTo triangle.x2, triangle.y2
@@ -71,11 +74,11 @@ class BubbleChart.Popover
     context.globalAlpha = 1
 
     context.fillStyle = @textColor
-    context.fillText @bubble.label, labelX + 7, labelY + @lineHeight
+    context.fillText @bubble.label, labelX + (7 * ratio), labelY + lh
 
-    context.font = "11px #{@textFont}"
-    detailX = labelX + 7
-    detailY = labelY + @lineHeight * 2
+    context.font = "#{@small_font_size * ratio}px #{@textFont}"
+    detailX = labelX + (7 * ratio)
+    detailY = labelY + lh * 2
     context.fillText "#{@bubble.data} #{@bubble.metric}", detailX, detailY
 
     context.closePath()

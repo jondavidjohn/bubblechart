@@ -158,7 +158,7 @@ class BubbleChart.Bubble
       pre_context.stroke()
 
     if @textColor
-      pre_context.font = "20px '#{@textFont}'"
+      pre_context.font = "#{20 * ratio}px '#{@textFont}'"
       pre_context.fillStyle = @textColor
       text_measurement = pre_context.measureText @label
       if text_measurement.width + 12 < @diameter
@@ -166,7 +166,7 @@ class BubbleChart.Bubble
         spacingY = @radius + (14 / 2)
         pre_context.fillText @label, spacingX, spacingY
       else
-        pre_context.font = "12px helvetica"
+        pre_context.font = "#{12 * ratio}px helvetica"
         text_measurement = pre_context.measureText @label
         if text_measurement.width + 7 < @diameter
           spacingX = @radius - (text_measurement.width / 2)
