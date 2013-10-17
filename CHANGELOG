@@ -1,5 +1,6 @@
 = 1.1.0.pre
   * Fix mouse position for retina displays - Issue #1
+  * Explicit support for retina (@2x) images
 
 = 1.1.0
   * Move the requestAnimationFrame and general performance enhancements

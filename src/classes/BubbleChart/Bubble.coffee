@@ -105,16 +105,25 @@ class BubbleChart.Bubble
   render: () ->
     if @img_src?
       @img.onload = () =>
+        canvas = document.createElement 'canvas'
+        ctx = canvas.getContext '2d'
+        bsRatio = BubbleChart.getBackingStoreRatio ctx
+
+        if @img_src.indexOf('@2x') is not -1
+          @img.height = @img.height / 2
+          @img.width = @img.width / 2
+        else if bsRatio > 1
+          @img.height = @img.height / bsRatio
+          @img.width = @img.width / bsRatio
+
         while @img.width > @diameter * @img_area
           @img.height = @img.height * 0.75
           @img.width = @img.width * 0.75
-        canvas = document.createElement 'canvas'
         canvas.height = @img.height
         canvas.width = @img.width + 2
         img_arc_x = @img.width / 2 + 2
         img_arc_y = @img.height / 2
         img_arc_r = @img.width / 2
-        ctx = canvas.getContext '2d'
         ctx.save()
         ctx.beginPath()
         ctx.arc img_arc_x, img_arc_y, img_arc_r, 0, Math.PI * 2, true
@@ -135,8 +144,9 @@ class BubbleChart.Bubble
         )
       @img.src = @img_src
     @pre = document.createElement 'canvas'
-    @pre.height = @pre.width = (@diameter + 3) * window.devicePixelRatio
     pre_context = @pre.getContext '2d'
+    ratio = BubbleChart.getPixelRatio pre_context
+    @pre.height = @pre.width = (@diameter + 3) * ratio
     pre_context.beginPath()
     pre_context.fillStyle = @fillColor
     pre_context.arc @radius + 1, @radius + 1, @radius, 0, Math.PI * 2, true

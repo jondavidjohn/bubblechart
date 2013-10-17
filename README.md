@@ -97,6 +97,14 @@ Example of a data object with an image covering 60% of the bubble:
 }
 ```
 
+##### Retina
+
+If your `img_src` value contains `@2x` it will be treated as a retina image and
+be downsized (by 2) for display.
+
+If you do not specify `@2x` images, and the client pixel density is greater
+than 1, this module will reduce the image size to prefer image clarity over size.
+
 #### Loading Spinner
 
 There is a provided Spinner object you can use to show a loading animation if

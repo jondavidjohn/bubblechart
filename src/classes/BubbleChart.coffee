@@ -34,7 +34,7 @@ class @BubbleChart
       c.context = c.getContext '2d'
 
       # Adjust for retina if needed
-      ratio = BubbleChart.getPixelRatio(c)
+      ratio = BubbleChart.getPixelRatio c.context
       c.style.height = "#{c.height}px"
       c.style.width = "#{c.width}px"
       c.width = c.width * ratio
@@ -57,13 +57,16 @@ class @BubbleChart
     if @data.length
       @reload()
 
-  @getPixelRatio: (canvas) ->
+  @getBackingStoreRatio: (context) ->
+    context.webkitBackingStorePixelRatio or
+    context.mozBackingStorePixelRatio or
+    context.msBackingStorePixelRatio or
+    context.oBackingStorePixelRatio or
+    context.backingStorePixelRatio or 1
+
+  @getPixelRatio: (context) ->
     ratio = window.devicePixelRatio or 1
-    backingStoreRatio = canvas.context.webkitBackingStorePixelRatio or
-                        canvas.context.mozBackingStorePixelRatio or
-                        canvas.context.msBackingStorePixelRatio or
-                        canvas.context.oBackingStorePixelRatio or
-                        canvas.context.backingStorePixelRatio or 1
+    backingStoreRatio = BubbleChart.getBackingStoreRatio(context)
     ratio / backingStoreRatio
 
   reload: () ->

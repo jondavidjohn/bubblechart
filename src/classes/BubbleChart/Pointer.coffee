@@ -46,7 +46,7 @@ class BubbleChart.Pointer
     (e) ->
       element = e.target or e.srcElement
       element_id = element.id
-      pr = BubbleChart.getPixelRatio(element)
+      pr = BubbleChart.getPixelRatio(element.getContext '2d')
       unless top[element_id]? and left[element_id]?
         top[element_id] = 0
         left[element_id] = 0
