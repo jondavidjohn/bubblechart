@@ -44,10 +44,12 @@ This is the exploded view of possbile options (with included defaults)
   textColor: "#fff"     // Bubble label color
   textType: "helvetica" // Font
 
-  popoverOpts: {        // Control the look of the hover popover
+  popoverOpts: {           // Control the look of the hover popover
     textFont: 'helvetica',
     textColor: '#fff',
     fillColor: '#333',
+    labelSize: 22,         // Popover Heading size
+    metricSize: 14,        // Popover Metric size
     opacity: 0.6,
   }
 }
@@ -96,6 +98,14 @@ Example of a data object with an image covering 60% of the bubble:
   img_area: 0.6
 }
 ```
+
+##### Retina
+
+If your `img_src` value contains `@2x` it will be treated as a retina image and
+be downsized (by 2) for display.
+
+If you do not specify `@2x` images, and the client pixel density is greater
+than 1, this module will reduce the image size to prefer image clarity over size.
 
 #### Loading Spinner
 

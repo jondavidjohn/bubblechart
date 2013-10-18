@@ -21,21 +21,6 @@
 		equal(pointer.grabbingBubble(), false);
 	});
 
-	test('getPixelRatio', function() {
-		var pointer = new Pointer(),
-			canvas = document.getElementById('test_canvas');
-
-		canvas.context = canvas.getContext('2d');
-
-		window.devicePixelRatio = 2;
-		canvas.context.webkitBackingStorePixelRatio = 1;
-		equal(pointer.getPixelRatio(canvas), window.devicePixelRatio);
-
-		window.devicePixelRatio = 2;
-		canvas.context.webkitBackingStorePixelRatio = 2;
-		equal(pointer.getPixelRatio(canvas), 1);
-	});
-
 	test('getPosition', function() {
 		var pointer = new Pointer(),
 			element = document.getElementById('test_canvas'),
