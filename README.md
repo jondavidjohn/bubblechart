@@ -44,12 +44,12 @@ This is the exploded view of possbile options (with included defaults)
   textColor: "#fff"     // Bubble label color
   textType: "helvetica" // Font
 
-  popoverOpts: {        // Control the look of the hover popover
+  popoverOpts: {           // Control the look of the hover popover
     textFont: 'helvetica',
     textColor: '#fff',
     fillColor: '#333',
-    labelSize: 22,
-    metricSize: 14,
+    labelSize: 22,         // Popover Heading size
+    metricSize: 14,        // Popover Metric size
     opacity: 0.6,
   }
 }

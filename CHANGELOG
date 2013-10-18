@@ -1,4 +1,5 @@
-= 1.1.0.pre
+= 1.1.1
+  * Configurable tooltip font sizes
   * Fix mouse position for retina displays - Issue #1
   * Explicit support for retina (@2x) images
   * Better Retina support and consistency in general
