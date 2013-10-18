@@ -48,6 +48,8 @@ This is the exploded view of possbile options (with included defaults)
     textFont: 'helvetica',
     textColor: '#fff',
     fillColor: '#333',
+    labelSize: 22,
+    metricSize: 14,
     opacity: 0.6,
   }
 }
