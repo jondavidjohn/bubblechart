@@ -1,3 +1,6 @@
+= 1.1.2
+  * Remove inconsistent test (failing in travis / succeeding locally)
+
 = 1.1.1
   * Configurable tooltip font sizes
   * Fix mouse position for retina displays - Issue #1

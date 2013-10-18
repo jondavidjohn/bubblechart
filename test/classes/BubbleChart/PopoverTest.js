@@ -71,22 +71,4 @@
 		equal(triangle.y2, 18);
 		equal(triangle.y3, 33);
 	});
-
-	test('getTextDems', function() {
-		var popover = getPopover(),
-			canvas = document.getElementById('test_canvas'),
-			ctx = canvas.getContext('2d');
-
-		dems = popover.getTextDems(ctx, "Hello World!", 24, 'arial');
-		equal(dems.height, 27);
-		equal(dems.width, 128);
-
-		dems = popover.getTextDems(ctx, "Hello World!", 12, 'helvetica');
-		equal(dems.height, 12);
-		equal(dems.width, 67);
-
-		dems = popover.getTextDems(ctx, "Hello World!", 44, '');
-		equal(dems.height, 49);
-		equal(dems.width, 232);
-	});
 })(BubbleChart.Popover);
