@@ -44,8 +44,8 @@
 		equal(popover.fillColor, '#333');
 		equal(popover.textColor, '#FFF');
 		equal(popover.textFont, 'helvetica');
-		equal(popover.labelSize, 22);
-		equal(popover.metricSize, 14);
+		equal(popover.labelSize, 18);
+		equal(popover.metricSize, 12);
 		equal(popover.opacity, 0.8);
 	});
 

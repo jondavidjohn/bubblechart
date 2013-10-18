@@ -6,8 +6,8 @@ class BubbleChart.Popover
     @textColor = o.textColor or '#FFF'
     @textFont = o.textFont or 'helvetica'
     @opacity = o.opacity or 0.8
-    @labelSize = o.labelSize or 22
-    @metricSize = o.metricSize or 14
+    @labelSize = o.labelSize or 18
+    @metricSize = o.metricSize or 12
     @last_draw = null
     @textDems = {}
     @pre = null
