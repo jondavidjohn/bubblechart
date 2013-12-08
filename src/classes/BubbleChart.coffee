@@ -102,10 +102,10 @@ class @BubbleChart
     for b in @bubbles
       b.advance @
       for bubble in @bubbles
-        if b.label isnt bubble.label and b.overlapsWith(bubble)
+        if b.label isnt bubble.label and b.overlapsWith bubble
           b.resolveCollisionWith bubble
         if @contain
-          bubble.pushAwayFromEdges(@canvas, @gutter)
+          bubble.pushAwayFromEdges @canvas, @gutter
 
   paint: (_animate = true) ->
     @canvas.style.cursor = "default" unless @pointer.grabbingBubble()
