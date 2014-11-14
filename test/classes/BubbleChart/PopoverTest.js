@@ -29,6 +29,7 @@
 			labelSize: 3,
 			metricSize: 5,
 			opacity: 5,
+			popoverShowData: true
 		});
 
 		equal(popover.fillColor, '#000');
@@ -37,6 +38,7 @@
 		equal(popover.labelSize, 3);
 		equal(popover.metricSize, 5);
 		equal(popover.opacity, 5);
+		equal(popover.popoverShowData, true);
 	});
 
 	test('constructor-defaults', function() {
