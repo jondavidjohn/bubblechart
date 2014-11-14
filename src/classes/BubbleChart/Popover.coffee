@@ -8,6 +8,9 @@ class BubbleChart.Popover
     @opacity = o.opacity or 0.8
     @labelSize = o.labelSize or 18
     @metricSize = o.metricSize or 12
+    @popoverShowData = true
+    if o.popoverShowData?
+      @popoverShowData = o.popoverShowData
     @last_draw = null
     @textDems = {}
     @pre = null
@@ -62,7 +65,11 @@ class BubbleChart.Popover
     tb_pad = 5 * ratio
     triangle_width = 16 * ratio
     triangle_height = 8 * ratio
-    metric_text = "#{@bubble.data} #{@bubble.metric}"
+
+    if this.popoverShowData
+      metric_text = "#{@bubble.data} #{@bubble.metric}"
+    else
+      metric_text = "#{@bubble.metric}"
 
     l_dems = @getTextDems context, @bubble.label, labelSize, @textFont
     m_dems = @getTextDems context, metric_text, metricSize, @textFont
