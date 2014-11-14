@@ -51,6 +51,7 @@ This is the exploded view of possbile options (with included defaults)
     labelSize: 22,         // Popover Heading size
     metricSize: 14,        // Popover Metric size
     opacity: 0.6,
+    popoverShowData: true  // Show the data value of the bubble in the popover
   }
 }
 ```
