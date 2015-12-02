@@ -21,6 +21,7 @@
     "grunt-contrib-watch": "0.5.3",
     "grunt-contrib-qunit": "0.2.2"
   },
+  "main": "./dist/bubblechart.js",
   "scripts": {
     "test": "grunt",
     "prepublish": "grunt dist"
